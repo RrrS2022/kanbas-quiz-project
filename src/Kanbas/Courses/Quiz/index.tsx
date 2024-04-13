@@ -91,7 +91,7 @@ function Quiz() {
         </div>
         <div>
           <span className="border rounded px-2">20% of Total</span>
-          <button className="btn btn-light me-2" ><FaPlus /></button>
+          <button className="btn btn-light me-2" onClick={handleAddClick}><FaPlus /></button>
 
           <button className="btn btn-light me-2"><FaEllipsisV /></button>
         </div>
