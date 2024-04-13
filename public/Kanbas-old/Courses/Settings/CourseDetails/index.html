@@ -1,0 +1,200 @@
+<form action="/Kanbas/Courses/Home/screen.html">
+<h2>Course Details</h2>
+<table>
+    <tbody>
+        <tr>
+            <td>Image:</td>
+            <td><input type="file" name="image" accept="image/png, image/jpeg, image/jpg">
+            </td>
+        </tr>
+
+        <tr>
+            <td>Name:</td>
+            <td>CS4550 12631 Web Development SEC 01 Fall 2023 [BOS-1-TR]</td>
+        </tr>
+
+        <tr>
+            <td>Course Code:</td>
+            <td>CS4550 12631.202410</td>
+        </tr>
+
+        <tr>
+            <td>Blueprint Course:</td>
+            <td>No</td>
+        </tr>
+
+        <tr>
+            <td>Course Template:</td>
+            <td>
+                <input type="checkbox" name="wd-template-options" id="wd-template" />
+                <label for="wd-course-template">Enable course as a Course Template</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Time Zone:</td>
+            <td>
+                <select>
+                    <option>Eastern Time (US & Canada) (-05:00/-04:00)</option>
+                    <option>Central Time (US & Canada) (-06:00/-05:00)</option>
+                    <option>Pacific Time (US & Canada) (-08:00/-07:00)</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>SIS ID:</td>
+            <td>CS4550 12631.202410</td>
+        </tr>
+
+        <tr>
+            <td>Subaccount:</td>
+            <td><a href="#">CS Undergrad</a></td>
+        </tr>
+
+        <tr>
+            <td>Term:</td>
+            <td>202410_1 Fall 2023 Semester Full </td>
+        </tr>
+
+        <tr>
+            <td>Participation</td>
+            <td>
+                <select>
+                    <option>Term</option>
+                    <option>Semester</option>
+                </select>
+                <br />
+                Course participation is limited to term start and end dates
+                <br>
+                <label for="text-fields-start-term"> Start </label> <br />
+                <input type="date" id="text-fields-start-term" /><br />
+
+                <label for="text-fields-end-term"> End </label> <br />
+                <input type="date" id="text-fields-end-term" /><br />
+
+                <input type="checkbox" name="wd-term-options" id="wd-term-before" />
+                <label for="wd-term-before">Restrict students from viewing course before term start date</label><br />
+
+                <input type="checkbox" name="wd-term-options" id="wd-term-after" />
+                <label for="wd-term-after">Restrict students from viewing course after term end date</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Default due time:</td>
+            <td>
+                <select>
+                    <option>Account defaut (11:59pm)</option>
+                    <option>12:00am</option>
+                    <option>12:00pm</option>
+                </select>
+                <br />
+                This influences the user interface for setting due dates. It does not change the time due for any existing assignments.
+            </td>
+        </tr>
+
+        <tr>
+            <td>Language:</td>
+            <td>
+                <select>
+                    <option>Not set (defaults to English)</option>
+                    <option>Spanish</option>
+                    <option>Chinese</option>
+                    <option>French</option>
+                    <option>German</option>
+                </select>
+                <br />
+                This will override any user/system language preferences. This is only recommended for foreign language courses.
+            </td>
+        </tr>
+
+        <tr>
+            <td>File Storgae:</td>
+            <td>10000 megabytes</td>
+        </tr>
+
+
+        <tr>
+            <td>Large Course:</td>
+            <td>
+                <input type="checkbox" name="wd-course-options" id="wd-large-course" />
+                <label for="wd-large-course">Lanuch SpeedGrader Filtered by Student Group</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Grading Scheme:</td>
+            <td>
+                <input type="checkbox" name="wd-grading-scheme" id="wd-grade-scheme" />
+                <label for="wd-grade-scheme">Enable course grading scheme</label>
+            </td>
+        </tr>
+
+
+
+        <tr>
+            <td>License:</td>
+            <td>
+                <select>
+                    <option>Private(Copyrighted)</option>
+                    <option>Public</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>File Copyright:</td>
+            <td>
+                <input type="checkbox" name="wd-copyright" id="wd-copyright" />
+                <label for="wd-copyright">Copyright and license information must be provided for files before they are published.</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Visability:</td>
+            <td>
+                If you need to make your course public, please contact your administor/ support. <br />
+                <select>
+                    <option>Course</option>
+                    <option>Public</option>
+                </select><br />
+
+                <input type="checkbox" name="wd-public-course" id="wd-public-course" />
+                <label for="wd-public-course">Include this course in the public course index</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Format:</td>
+            <td>
+                <select>
+                    <option>On-campus</option>
+                    <option>Online</option>
+                    <option>Hybrid</option>
+                </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>Mastery Paths:</td>
+            <td>
+                <input type="checkbox" name="wd-mastery-path" id="wd-mastery-path" />
+                <label for="wd-mastery-path">Enable individual learning paths for students based on assessments.</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Description:</td>
+            <td><textarea cols="20" rows="5"></textarea></td>
+        </tr>
+
+        <tr>
+            <td><a href="#">more options</a></td>
+        </tr>
+
+    </tbody>
+</table>
+<button type="submit">Update Course Details</button>
+</form>

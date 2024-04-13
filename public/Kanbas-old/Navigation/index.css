@@ -1,0 +1,104 @@
+.wd-kanbas-navigation {
+    background-color: black;
+    list-style: none;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 85px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+}
+
+.wd-kanbas-navigation li {
+    text-align: center;
+    padding: 10px;
+    width: 100%; 
+    margin-bottom: 10px; 
+}
+
+.wd-kanbas-navigation li a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.8em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; 
+}
+
+.wd-kanbas-navigation a i {
+    color: red;
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.wd-kanbas-navigation li i {
+    color: red;
+}
+
+.wd-kanbas-navigation li.wd-active {
+    background-color: white;
+}
+
+.wd-kanbas-navigation li.wd-active a {
+    color: red;
+}
+
+.wd-kanbas-navigation li:nth-child(2) a i {
+    color: white;
+}
+
+
+
+.fa-times {
+    display: none;
+}
+
+#navbarToggle:checked + label .fa-chevron-down {
+    display: none; 
+}
+
+#navbarToggle:checked + label .fa-times {
+    display: inline-block !important;
+}
+
+#kanbasNavToggle:not(:checked) + label .fa-times {
+    display: none;
+}
+
+#kanbasNavToggle:checked + label .fa-bars {
+    display: none;
+}
+#kanbasNavToggle:checked + label .fa-times {
+    display: inline-block !important;
+}
+
+#kanbasNavToggle:checked + .navbar-title {
+    display: none !important;
+}
+
+#kanbasNav {
+    background-color: white;
+}
+
+#kanbasNav .nav-link,
+#kanbasNav .nav-link i,
+#kanbasNav .nav-link span {
+    color: red; 
+}
+
+#courseNav {
+    background-color: white;
+}
+
+#courseNav a {
+    color: red;
+}
+
+#courseNav .fa {
+    color: red; 
+}
