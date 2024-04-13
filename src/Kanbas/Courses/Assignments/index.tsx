@@ -73,6 +73,7 @@ function Assignments() {
     setSelectAssignmentId("");
   };
 
+  console.log(assignmentList)
 
 
   return (

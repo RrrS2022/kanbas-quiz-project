@@ -11,7 +11,7 @@ import CourseStatus from "./Status";
 import "./index.css"
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import Quiz from "./Quiz";
 
 function Courses() {
     const { courseId } = useParams();
@@ -63,6 +63,7 @@ function Courses() {
                             <Route path="Modules" element={<Modules />} />
                             <Route path="Piazza" element={<h1>Piazza</h1>} />
                             <Route path="Assignments" element={<Assignments />} />
+                            <Route path="Quizzes" element={<Quiz />} />
                             <Route path="Assignments/:assignmentId" element={<AssignmentEditor />} />
                             <Route path="Grades" element={<Grades />} />
                         </Routes>
