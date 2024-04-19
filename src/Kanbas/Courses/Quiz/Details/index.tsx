@@ -1,7 +1,7 @@
 import React from "react";
 import { FaCheckCircle, FaPencilAlt, FaEllipsisV} from "react-icons/fa";
 
-function QuizDetails() {
+export default function QuizDetails() {
 
     return(
         <div className="ms-5 ,me-5">

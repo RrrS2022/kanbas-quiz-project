@@ -1,0 +1,47 @@
+[
+    {
+        "_id": "Q101",
+        "title": "Q1 Assignment",
+        "course": "RS101"
+    },
+    {
+        "_id": "Q102",
+        "title": "Q2 Assignment",
+        "course": "RS101"
+    },
+    {
+        "_id": "Q103",
+        "title": "Q3 Assignment",
+        "course": "RS101"
+    },
+    {
+        "_id": "Q201",
+        "title": "Quiz 1",
+        "course": "RS102"
+    },
+    {
+        "_id": "Q202",
+        "title": "Quiz 2",
+        "course": "RS102"
+    },
+    {
+        "_id": "Q203",
+        "title": "Quiz 3",
+        "course": "RS102"
+    },
+    {
+        "_id": "Q301",
+        "title": "Quiz 1",
+        "course": "RS103"
+    },
+    {
+        "_id": "Q302",
+        "title": "Quiz 2",
+        "course": "RS103"
+    },
+    {
+        "_id": "Q303",
+        "title": "Quiz 3",
+        "course": "RS103"
+    }
+]
