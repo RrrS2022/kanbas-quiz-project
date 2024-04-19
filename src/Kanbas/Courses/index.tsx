@@ -12,6 +12,7 @@ import "./index.css"
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Quiz from "./Quiz";
+import QuizDetails from "./Quiz/Details";
 
 function Courses() {
     const { courseId } = useParams();
@@ -64,6 +65,7 @@ function Courses() {
                             <Route path="Piazza" element={<h1>Piazza</h1>} />
                             <Route path="Assignments" element={<Assignments />} />
                             <Route path="Quizzes" element={<Quiz />} />
+                            <Route path="Quiz/:quizId" element={<QuizDetails />} />
                             <Route path="Assignments/:assignmentId" element={<AssignmentEditor />} />
                             <Route path="Grades" element={<Grades />} />
                         </Routes>

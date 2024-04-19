@@ -9,6 +9,7 @@ interface Quiz {
   dueDate: string;
   availableFromDate: string;
   availableUntilDate: string;
+  published: boolean
 }
 
 interface QuizzesState {
@@ -20,7 +21,7 @@ const initialState: QuizzesState = {
     quizzes: [],
     quiz: { title: "New Quiz", description: "this is the new quiz", 
     points: "100", dueDate: "03/15/2024", 
-    availableFromDate: "02/15/2024",  availableUntilDate: "03/15/2024"},
+    availableFromDate: "02/15/2024",  availableUntilDate: "03/15/2024", published: true},
   };
 
   const quizzesSlice = createSlice({
