@@ -9,7 +9,7 @@ export default function QuizDetails() {
     const navigate = useNavigate();
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz)
     const handleEdit = (() => {
-        navigate(`/Kanbas/Courses/${courseId}/Quizzes/Editor/${quiz._id}/Details`);
+        navigate(`/Kanbas/Courses/${courseId}/Quiz/newQuiz/Editor`);
       })
 
     return(
