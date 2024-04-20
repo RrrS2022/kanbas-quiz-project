@@ -1,0 +1,93 @@
+.quiz-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-info {
+  display: flex;
+  align-items: left;
+}
+
+.points,
+.status {
+  margin-right: 16px;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  margin: 16px 0;
+}
+
+.tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  margin-right: 8px;
+}
+
+.tab.active {
+  border-bottom: 2px solid #007bff;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.spacer {
+  flex-grow: 1;
+}
+.action-button {
+  padding: 8px 16px;
+  border: 1px solid #cccccc;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.search-input {
+  padding: 8px;
+  border: 1px solid #cccccc;
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.notify-label {
+  display: flex;
+  align-items: center;
+}
+
+.footer-buttons button {
+  padding: 8px 16px;
+  margin-right: 8px;
+  border: 1px solid #cccccc;
+  background: #f7f7f7;
+  cursor: pointer;
+}

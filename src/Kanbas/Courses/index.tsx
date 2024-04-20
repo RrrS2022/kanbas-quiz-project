@@ -20,6 +20,7 @@ import axios from "axios";
 import Quiz from "./Quiz";
 import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
+import QuizQuestionsEditor from "./Quiz/Questions/QuestionsEditor";
 
 function Courses() {
   const { courseId } = useParams();
@@ -78,6 +79,10 @@ function Courses() {
               <Route path="Quizzes" element={<Quiz />} />
               <Route path="Quiz/:quizId" element={<QuizDetails />} />
               <Route path="Quiz/:quizId/question" element={<QuizQuestions />} />
+              <Route
+                path="Quiz/:quizId/question/editor"
+                element={<QuizQuestionsEditor />}
+              />
               <Route
                 path="Assignments/:assignmentId"
                 element={<AssignmentEditor />}
