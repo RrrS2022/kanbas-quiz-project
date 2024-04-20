@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface Choice {
-  text: string;
-  isCorrect: boolean;
-}
+
 
 interface Question {
   _id?: string;
@@ -11,7 +8,8 @@ interface Question {
   questionType: string;
   points: number;
   question: string;
-  choices: Choice[];
+  options: string[];
+  answers: string[]
 }
 
 interface QuestionsState {
@@ -26,20 +24,8 @@ const initialState: QuestionsState = {
     questionType: "MC",
     points: 10,
     question: "What is 3 + 3",
-    choices: [
-      {
-        text: "A. 4",
-        isCorrect: true,
-      },
-      {
-        text: "B. 5",
-        isCorrect: false,
-      },
-      {
-        text: "C. 6",
-        isCorrect: false,
-      },
-    ],
+    options: ["A. 4", "B. 5", "C. 6"],
+    answers : ["A"],
   },
 };
 

@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Quiz from "./Quiz";
 import QuizDetails from "./Quiz/Details";
-import QuizQuestionsEditor from "./Quiz/Questions/QuestionEditor";
+import QuizQuestions from "./Quiz/Questions";
 
 function Courses() {
   const { courseId } = useParams();
@@ -77,7 +77,7 @@ function Courses() {
               <Route path="Assignments" element={<Assignments />} />
               <Route path="Quizzes" element={<Quiz />} />
               <Route path="Quizzes/:quizId" element={<QuizDetails />} />
-              <Route path="Quizzes/:quizId/questions" element={<QuizQuestionsEditor />} />
+              <Route path="Quizzes/:quizId/questions" element={<QuizQuestions />} />
               <Route
                 path="Assignments/:assignmentId"
                 element={<AssignmentEditor />}
