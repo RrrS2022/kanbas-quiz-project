@@ -9,17 +9,33 @@ import {
 } from "./quizzesReducer";
 import { KanbasState } from "../../store";
 import * as client from "./client";
+import { IoRocketOutline } from "react-icons/io5";
+
 
 function Quiz() {
   const { courseId } = useParams();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectQuizId, setSelectQuizId] = useState("");
-  const quizList = useSelector((state: KanbasState) =>
-    state.quizzesReducer.quizzes);
+  const quizList = useSelector((state: KanbasState) => state.quizzesReducer.quizzes);
   const quiz = useSelector((state: KanbasState) =>
     state.quizzesReducer.quiz);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const getAvailabilityStatus = (quiz: any) => {
+    const currentDate = new Date();
+    const availableFrom = new Date(quiz.availableFromDate);
+    const availableUntil = new Date(quiz.availableUntilDate);
+
+    if (currentDate < availableFrom) {
+      return `Not available until ${availableFrom.toLocaleDateString()} at ${availableFrom.toLocaleTimeString()}`;
+    } else if (currentDate >= availableFrom && currentDate <= availableUntil) {
+      return 'Available';
+    } else {
+      return 'Closed';
+    }
+  };
+
 
   const handleAddClick = (() => {
     navigate(`/Kanbas/Courses/${courseId}/Quiz/newQuiz`);
@@ -30,6 +46,23 @@ function Quiz() {
       dispatch(deleteQuiz(quizId));
     });
   };
+
+  const togglePublishStatus = (quizId: string, isCurrentlyPublished: boolean) => {
+    const changes = { published: !isCurrentlyPublished };
+    client.updateQuiz({ _id: quizId, ...changes })
+      .then(updatedQuiz => {
+        dispatch(updateQuiz({
+          _id: quizId,
+          changes: updatedQuiz
+        }));
+      })
+      .catch(error => {
+        console.error('Error updating quiz:', error);
+      });
+  };
+
+
+
   useEffect(() => {
     if (courseId !== undefined) {
       client.findQuizzesForCourse(courseId)
@@ -72,8 +105,7 @@ function Quiz() {
     setIsDialogOpen(false);
     setSelectQuizId("");
   };
-  console.log(quizList)
-
+  
 
 
   return (
@@ -105,32 +137,47 @@ function Quiz() {
 
       {/* Table content - quiz list  */}
       {quizList.filter((quiz) => quiz.course === courseId).map((quiz, index) => (
-      <div key={quiz._id} className="list-group-item list-group-item-action">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex align-items-center">
-            <FaEllipsisV className="me-2" />
-            <FaPencilAlt className="me-2" />
+        <div key={quiz._id} className="list-group-item list-group-item-action">
+          <div className="d-flex justify-content-between align-items-center">
+            <Link style={{ color: 'inherit', textDecoration: 'none' }} className="d-flex align-items-center" to={`/Kanbas/Courses/${courseId}/Quiz/${quiz._id}`}>
+              <IoRocketOutline className="mx-2 text-success" />
+              <div>
+                <h5 className="mb-1 text-dark">{quiz.title}</h5>
+                <span className="mb-0">
+                  {getAvailabilityStatus(quiz)} {" "}
+                </span>
+                <span className="mb-0">
+                  | Due date: {new Date(quiz.dueDate).toLocaleDateString()} at {new Date(quiz.dueDate).toLocaleTimeString()} {" "}
+                </span>
+                <span className="mb-0">
+                  {quiz.points} pts {" "}
+                </span>
+                <span className="mb-0">
+                  | {quiz.questionNumber} Questions
+                </span>
+              </div>
+            </Link>
+
+            {/* Menu & Buttons  */}
             <div>
-              <h5 className="mb-1">{quiz.title}</h5>
-              <p className="mb-0">Multiple modules | Not available yet | 100pts</p>
-            </div>
-          </div>
-          <div>
-            <FaCheckCircle className="me-2" />
-            <div className="btn-group">
-              <button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
-                <FaEllipsisV className="me-2" />
-              </button>
-              <div className="dropdown-menu">
-                <Link className="dropdown-item" to={`/Kanbas/Courses/${courseId}/Quiz/${quiz._id}`}>Edit</Link>
-                <button onClick={(event) => handleDelete(event, quiz._id)} className="dropdown-item">Delete</button>
-                <a className="dropdown-item" href="#">Publish</a>
+              <FaCheckCircle className="me-2" style={{ color: quiz.published ? 'green' : 'grey' }} />
+              <div className="btn-group">
+                <button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
+                  <FaEllipsisV className="me-2" />
+                </button>
+                <div className="dropdown-menu">
+                  <Link className="dropdown-item" to={`/Kanbas/Courses/${courseId}/Quiz/${quiz._id}`}>Edit</Link>
+                  <button onClick={(event) => handleDelete(event, quiz._id)} className="dropdown-item">Delete</button>
+                  <button onClick={() => togglePublishStatus(quiz._id, quiz.published)} className="dropdown-item">
+                    {quiz.published ? 'Unpublish' : 'Publish'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    ))}
+      ))
+      }
     </div >
   );
 }
