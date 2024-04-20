@@ -4,11 +4,13 @@ import { FaCheckCircle, FaEllipsisV, FaPlus, FaPencilAlt } from "react-icons/fa"
 import { useSelector, useDispatch } from "react-redux";
 import * as client from "./client";
 import { KanbasState } from "../../../store";
+import {
+    setQuestions
+  } from "./questionsReducer";
 
 
 function QuizQuestions() {
     const { quizId } = useParams();
-
     const [selectQuestionId, setSelectQuestionId] = useState("");
     const questionList = useSelector((state: KanbasState) =>
         state.questionReducer.questions);
@@ -17,8 +19,14 @@ function QuizQuestions() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    return (
+    useEffect(() => {
+        if (quizId !== undefined) {
+          client.findAllQuestionsForQuiz(quizId)
+            .then((questions) => dispatch(setQuestions(questions)));
+        }
+      }, [quizId]);
 
+    return (
         <div className="list-group mb-3 me-5" style={{ borderRadius: '0' }}>
             <div className="d-flex justify-content-between align-items-center list-group-item"
                 style={{ backgroundColor: 'lightgrey' }}>
@@ -27,10 +35,7 @@ function QuizQuestions() {
                     <h3 className="mb-0">Questions</h3>
                 </div>
                 <div>
-                    <span className="border rounded px-2">40% of Total</span>
-                    {/* <button className="btn btn-light me-2" onClick={handleAddClick}><FaPlus /></button> */}
-
-
+                    <span className="border rounded px-2">10% of Total</span>
                     <button className="btn btn-light me-2"><FaEllipsisV /></button>
                 </div>
             </div>

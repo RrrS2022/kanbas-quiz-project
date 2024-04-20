@@ -25,6 +25,7 @@ export const createQuestion = async (quizId: string, questionData: any) => {
 };
 
 export const findAllQuestionsForQuiz = async (quizId: string) => {
+  console.log(quizId)
   const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
   return response.data;
 };

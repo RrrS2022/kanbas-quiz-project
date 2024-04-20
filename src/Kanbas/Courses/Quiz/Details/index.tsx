@@ -1,7 +1,16 @@
 import React from "react";
 import { FaCheckCircle, FaPencilAlt, FaEllipsisV} from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
+import { KanbasState } from "../../../store";
 
 export default function QuizDetails() {
+    const { courseId, quizId } = useParams();
+    const navigate = useNavigate();
+    const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz)
+    const handleEdit = (() => {
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Editor`);
+      })
 
     return(
         <div className="ms-5 ,me-5">
@@ -13,6 +22,7 @@ export default function QuizDetails() {
                         Preview
                 </button>
                 <button className="btn btn-light"
+                    onClick={handleEdit}
                     style={{ marginRight:"5px", borderRadius:"4px"}}>
                     <FaPencilAlt />Edit
                 </button>

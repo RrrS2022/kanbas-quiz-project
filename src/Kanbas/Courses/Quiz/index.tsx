@@ -38,7 +38,7 @@ function Quiz() {
 
 
   const handleAddClick = (() => {
-    navigate(`/Kanbas/Courses/${courseId}/Quiz/newQuiz`);
+    navigate(`/Kanbas/Courses/${courseId}/Quizzes/newQuiz`);
   })
 
   const handleDeleteQuiz = (quizId: string) => {
@@ -139,7 +139,7 @@ function Quiz() {
       {quizList.filter((quiz) => quiz.course === courseId).map((quiz, index) => (
         <div key={quiz._id} className="list-group-item list-group-item-action">
           <div className="d-flex justify-content-between align-items-center">
-            <Link style={{ color: 'inherit', textDecoration: 'none' }} className="d-flex align-items-center" to={`/Kanbas/Courses/${courseId}/Quiz/${quiz._id}`}>
+            <Link style={{ color: 'inherit', textDecoration: 'none' }} className="d-flex align-items-center" to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`}>
               <IoRocketOutline className="mx-2 text-success" />
               <div>
                 <h5 className="mb-1 text-dark">{quiz.title}</h5>
