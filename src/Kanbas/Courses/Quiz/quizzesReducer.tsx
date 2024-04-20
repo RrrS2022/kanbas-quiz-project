@@ -10,7 +10,17 @@ interface Quiz {
   dueDate: string;
   availableFromDate: string;
   availableUntilDate: string;
-  published: boolean
+  published: boolean;
+  timelimit: Number;
+  shuffleAnswers: boolean;
+  multipleAttempts: boolean;
+  showAnswers: boolean;
+  accessCode: string;
+  oneQuestionataTime: boolean;
+  webCam: boolean;
+  lockQuestion: boolean;
+
+
 }
 
 interface QuizzesState {
@@ -24,7 +34,10 @@ const initialState: QuizzesState = {
     title: "New Quiz", description: "this is the new quiz",
     points: 100, questionNumber: 10, dueDate: "2024-05-10",
     availableFromDate: "2024-02-15", availableUntilDate: "2024-05-15",
-    published: true
+    published: true, timelimit:20, shuffleAnswers: true, multipleAttempts: false,
+    showAnswers: false, accessCode: "", oneQuestionataTime: true, webCam: false,
+    lockQuestion: false,
+
 },
   };
 

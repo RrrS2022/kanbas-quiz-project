@@ -55,30 +55,52 @@ export default function QuizDetailsEditor () {
                     <option value="project">PROJECT</option>
                 </select>
             </div>
+        
             <div className="mb-3 row justify-content-center">
-            <label htmlFor="display_grade-as" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
-                Display Grade as
-            </label>
-            <select id="display_grade-as" className="form-select col-sm-8" style={{ width: "400px", marginLeft: "20px" }}>
-                <option selected>Percentage</option>
-            </select>
-            </div>
-            <div className="mb-3 row justify-content-center">
-            <label htmlFor="submission_type" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
-                Submission Type
-            </label>
-            <select id="submission_type" className="form-select col-sm-8" style={{ width: "400px", marginLeft: "20px" }}>
-                <option selected>Online</option>
-            </select>
+                <label htmlFor="submission_type" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
+                    Access Code
+                </label>
+                <div className="col-sm-6">
+                    <input type="number" className="form-control" id="points" />
+                </div>
             </div>
             <div className="row mb-3">
                 <div className="col-sm-8 offset-sm-4">
+                    <b>Options</b>
                     <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="r6" />
-                    <label className="form-check-label" htmlFor="r6">
-                        Do not count this assignment towards the final grade
-                    </label>
+                        <input className="form-check-input" type="checkbox" id="shuffle_answer" />
+                        <label className="form-check-label" htmlFor="shuffle_answer">
+                            Shuffle Answers
+                        </label>
                     </div>
+                    <br />
+                    <div className="d-flex">
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" id="time_limit" />
+                            <label className="form-check-label" htmlFor="time_limit">
+                                Time Limit
+                            </label>              
+                        </div>
+                        <input className="form-control" type="number" value={quiz.timelimit} 
+                            style={{width:"60px", marginLeft:"50px", marginRight:"20px"}}/> Mintues
+                    </div>
+                    <div className="form-group justify-content-center" 
+                        style={{border:"solid 1px #ccc", height: "auto", borderRadius: "8px", marginTop:"5px"}}>
+                        <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
+                            <input className="form-check-input" type="checkbox" id="multiple_attempts" />
+                            <label className="form-check-label" htmlFor="multiple_attempts">
+                                Allow Multiple Attempts
+                            </label>
+                        </div>
+                        <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
+                            <input className="form-check-input" type="checkbox" id="show_answers" />
+                            <label className="form-check-label" htmlFor="show_answers">
+                                Show Correct Answers
+                            </label>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
             </div>
         </div>
@@ -112,7 +134,6 @@ export default function QuizDetailsEditor () {
           </div>
         </div>
       </div>
-      <hr />
     </div>
     );
     
