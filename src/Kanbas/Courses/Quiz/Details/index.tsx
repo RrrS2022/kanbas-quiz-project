@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router";
 import { KanbasState } from "../../../store";
 
 export default function QuizDetails() {
-    const courseId = useParams();
+    const { courseId, quizId } = useParams();
     const navigate = useNavigate();
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz)
     const handleEdit = (() => {
-        navigate(`/Kanbas/Courses/${courseId}/Quiz/newQuiz/Editor`);
+        navigate(`/Kanbas/Courses/${courseId}/Quiz/${quizId}/Editor`);
       })
 
     return(
