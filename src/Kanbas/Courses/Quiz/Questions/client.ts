@@ -1,51 +1,35 @@
 import axios from "axios";
 const API_BASE = process.env.REACT_APP_API_BASE;
 
-const COURSES_API = `${API_BASE}/api/courses`;
 const QUIZZES_API = `${API_BASE}/api/quizzes`;
-const QUESTIONS_API = `${API_BASE}/api/questions`;
 
-export const updateQuestion = async (question: any) => {
+export const updateQuestion = async (quizId: string, questionId: string, questionData: any) => {
   const response = await axios.put(
-    `${QUESTIONS_API}/${question._id}`,
-    question
+    `${QUIZZES_API}/${quizId}/questions/${questionId}`,
+    questionData
   );
   return response.data;
 };
 
-export const deleteQuestion = async (questionId: string) => {
-  const response = await axios.delete(`${QUESTIONS_API}/${questionId}`);
+export const deleteQuestion = async (quizId: string, questionId: string) => {
+  const response = await axios.delete(`${QUIZZES_API}/${quizId}/questions/${questionId}`);
   return response.data;
 };
 
-export const createQuestion = async (quizId: any, question: any) => {
+export const createQuestion = async (quizId: string, questionData: any) => {
   const response = await axios.post(
     `${QUIZZES_API}/${quizId}/questions`,
-    question
+    questionData
   );
   return response.data;
 };
 
-export const findAllQuestions = async () => {
-  const response = await axios.get(QUESTIONS_API);
+export const findAllQuestionsForQuiz = async (quizId: string) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}/questions`);
   return response.data;
 };
 
-export const findQuestionById = async (questionId: any) => {
-  const response = await axios.get(`${QUESTIONS_API}/${questionId}`);
+export const findQuestionById = async (quizId: string, questionId: string) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}/questions/${questionId}`);
   return response.data;
 };
-
-// export const createModule = async (courseId: string, module: string) => {
-//     const response = await axios.post(
-//       `${COURSES_API}/${courseId}/quizzes`,
-//       module
-//     );
-//     return response.data;
-//   };
-
-// export const findModulesForCourse = async (courseId: string) => {
-//   const response = await axios
-//     .get(`${COURSES_API}/${courseId}/modules`);
-//   return response.data;
-// };

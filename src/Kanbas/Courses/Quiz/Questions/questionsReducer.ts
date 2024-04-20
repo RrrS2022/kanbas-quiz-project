@@ -1,19 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface Choice {
+  option: string;
+  isCorrect: boolean;
+}
+
 interface Question {
   _id?: string;
-  name: string;
-  description: string;
+  title: string;
+  type: string;
+  points: number;
+  question: string;
+  choices: Choice[];
 }
 
 interface QuestionsState {
-    questions: Question[];
-    question: Question;
+  questions: Question[];
+  question: Question;
 }
 
-const initialState:QuestionsState = {
+const initialState: QuestionsState = {
   questions: [],
-  question: { name: "New Module 123", description: "New Description" },
+  question: {
+    title: "New Module 123",
+    type: "MC",
+    points: 10,
+    question: "What is 3 + 3",
+    choices: [
+      { option: "6", isCorrect: true },
+      { option: "5", isCorrect: false },
+      { option: "7", isCorrect: false },     
+    ],
+  },
 };
 
 const questionsSlice = createSlice({
@@ -46,6 +64,11 @@ const questionsSlice = createSlice({
   },
 });
 
-export const { addQuestion, deleteQuestion,
-    updateQuestion, selectQuestion, setQuestions} = questionsSlice.actions;
+export const {
+  addQuestion,
+  deleteQuestion,
+  updateQuestion,
+  selectQuestion,
+  setQuestions,
+} = questionsSlice.actions;
 export default questionsSlice.reducer;

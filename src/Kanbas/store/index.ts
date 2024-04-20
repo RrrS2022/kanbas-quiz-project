@@ -4,7 +4,6 @@ import assignmentsReducer from "../Courses/Assignments/assignmentsReducer"
 import quizzesReducer from "../Courses/Quiz/quizzesReducer";
 import questionReducer from "../Courses/Quiz/Questions/questionsReducer"
 
-
 export interface KanbasState {
   modulesReducer: {
     modules: any[];

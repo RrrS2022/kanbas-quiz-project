@@ -1,154 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { FaCheckCircle, FaEllipsisV, FaPlus, FaPencilAlt } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-// import {
-//   addAssignment, deleteAssignment,
-//   updateAssignment, selectAssignment
-// } from ".././assignmentsReducer";
+import * as client from "./client";
 import { KanbasState } from "../../../store";
-import * as client from "../client";
+
 
 function QuizQuestions() {
-    //   const { courseId, assignmentId } = useParams();
-    //   const navigate = useNavigate();
+    const { quizId } = useParams();
 
-    //   const assignmentList = useSelector((state: KanbasState) =>
-    //     state.assignmentsReducer.assignments);
-    //   const assignment = useSelector((state: KanbasState) =>
-    //     state.assignmentsReducer.assignment);
-    //   const dispatch = useDispatch();
-
-    //   const handleAddAssignment = () => {
-    //     if (typeof courseId === 'string') {
-    //       client.createAssignment(courseId, assignment).then((assignment) => {
-    //         dispatch(addAssignment(assignment));
-    //       });
-    //     } else {
-    //       console.error('courseId is undefined');
-    //     }
-    //   };
-
-
-    //   const handleUpdateAssignment = async () => {
-    //     const status = await client.updateAssignment(assignment);
-    //     dispatch(updateAssignment(assignment));
-    //   };
-
-    //   const handleSave = () => {
-    //     if (assignmentId === "newAssignment") {
-    //       handleAddAssignment();
-    //     } else {
-    //       handleUpdateAssignment();
-    //     }
-
-    //     navigate(`/Kanbas/Courses/${courseId}/Assignments`);
-    // };
+    const [selectQuestionId, setSelectQuestionId] = useState("");
+    const questionList = useSelector((state: KanbasState) =>
+        state.questionReducer.questions);
+    const question = useSelector((state: KanbasState) =>
+        state.questionReducer.question);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
-        <div className="ms-5 me-5">
-            <div className="d-flex justify-content-end">
-                <span style={{ color: 'green' }}><FaCheckCircle />Published</span>
-                <button type="button" className="btn btn-light"><FaEllipsisV /></button>
+
+        <div className="list-group mb-3 me-5" style={{ borderRadius: '0' }}>
+            <div className="d-flex justify-content-between align-items-center list-group-item"
+                style={{ backgroundColor: 'lightgrey' }}>
+                <div className="d-flex align-items-center">
+                    <FaEllipsisV className="me-2" />
+                    <h3 className="mb-0">Questions</h3>
+                </div>
+                <div>
+                    <span className="border rounded px-2">40% of Total</span>
+                    {/* <button className="btn btn-light me-2" onClick={handleAddClick}><FaPlus /></button> */}
+
+
+                    <button className="btn btn-light me-2"><FaEllipsisV /></button>
+                </div>
             </div>
-            <hr />
-            <form>
-                <table className="table">
-                    <tbody>
-                        <tr>
-                            <td><label htmlFor="assignmentName" className="form-label">Quiz Name</label></td>
-                            {/* <td><input
-                                type="text"
-                                className="form-control"
-                                id="assignmentName"
-                                value={assignment.title}
-                                onChange={(e) =>
-                                    dispatch(selectAssignment({ ...assignment, title: e.target.value }))}
-                            /></td> */}
-                        </tr>
+            {questionList.filter((question) => question.quiz === quizId).map((assignment, index) => (
+                // <Link to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}
+                //   className="list-group-item list-group-item-action"
+                //   key={assignment._id}
+                //   onClick={() => dispatch(selectAssignment(assignment))}>
+                //   <div className="d-flex justify-content-between align-items-center">
+                //     <div className="d-flex align-items-center">
+                //       <FaEllipsisV className="me-2" />
+                //       <FaPencilAlt className="me-2" />
+                //       <div>
+                //         <h5 className="mb-1">{assignment.title}</h5>
+                //         <p className="mb-0">Multiple modules | Not available yet | 100pts</p>
+                //       </div>
+                //     </div>
+                //     <div>
+                //       <FaCheckCircle className="me-2" />
+                //       <FaEllipsisV className="me-2" />
+                //       <button
+                //         onClick={(event) => handleDelete(event, assignment._id)}
+                //         className="btn btn-danger">
+                //         Delete
+                //       </button>
+                //     </div>
+                //   </div>
+                // </Link>
 
-                        <tr>
-                            <td><label htmlFor="assignmentDescription" className="form-label">Assignment Description</label>
-                            </td>
-                            {/* <td>
-                                <textarea
-                                    className="form-control"
-                                    id="assignmentDescription"
-                                    value={assignment.description}
-                                    onChange={(e) => dispatch(selectAssignment({ ...assignment, description: e.target.value }))}
-
-                                />
-                            </td> */}
-                        </tr>
-
-                        <tr>
-                            <td><label htmlFor="points" className="form-label">Points</label></td>
-                            {/* <td>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    id="points"
-                                    value={assignment.points}
-                                    onChange={(e) => dispatch(selectAssignment({ ...assignment, points: e.target.value }))}
-                                />
-                            </td> */}
-                        </tr>
-
-                        <tr>
-                            <td><label htmlFor="due" className="form-label">Due</label></td>
-                            {/* <td>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="dueDate"
-                                    value={assignment.dueDate}
-                                    onChange={(e) => dispatch(selectAssignment({ ...assignment, dueDate: e.target.value }))}
-                                />
-                            </td> */}
-                        </tr>
-
-                        <tr>
-                            <td><label htmlFor="availableFromDate" className="form-label">Available From</label></td>
-                            {/* <td>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="availableFromDate"
-                                    value={assignment.availableFromDate}
-                                    onChange={(e) => dispatch(selectAssignment({ ...assignment, availableFromDate: e.target.value }))}
-                                />
-                            </td> */}
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <label htmlFor="availableUntilDate" className="form-label">Available Until</label></td>
-                            {/* <td>
-                                <input
-                                    type="date"
-                                    className="form-control"
-                                    id="availableUntilDate"
-                                    value={assignment.availableUntilDate}
-                                    onChange={(e) => dispatch(selectAssignment({ ...assignment, availableUntilDate: e.target.value }))}
-                                />
-                            </td> */}
-                        </tr>
-
-                        <div className="d-flex justify-content-between">
-                            {/* <button onClick={handleSave} type="submit"
-                                className="btn btn-success ms-2 float-end">
-                                Save
-                            </button>
-                            <Link to={`/Kanbas/Courses/${courseId}/Assignments`}
-                                className="btn btn-danger ms-2 float-end">
-                                Cancel
-                            </Link> */}
-
-                        </div>
-
-                    </tbody>
-                </table>
-            </form>
+                <div>
+                    {question.title}
+                </div>
+            ))}
         </div>
     );
 }
