@@ -11,6 +11,10 @@ export default function QuizDetails() {
     const handleEdit = (() => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Editor`);
       })
+    const handleQuestion = (() => {
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions`);
+
+    })
 
     return(
         <div className="ms-5 ,me-5">
@@ -25,6 +29,11 @@ export default function QuizDetails() {
                     onClick={handleEdit}
                     style={{ marginRight:"5px", borderRadius:"4px"}}>
                     <FaPencilAlt />Edit
+                </button>
+                <button className="btn btn-light"
+                    onClick={handleQuestion}
+                    style={{ marginRight:"5px", borderRadius:"4px"}}>
+                    <FaPencilAlt />Questions
                 </button>
                 <button className="btn btn-light"
                     style={{borderRadius:"4px"}}>

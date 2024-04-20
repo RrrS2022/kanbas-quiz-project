@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Choice {
-  option: string;
+  text: string;
   isCorrect: boolean;
 }
 
 interface Question {
   _id?: string;
   title: string;
-  type: string;
+  questionType: string;
   points: number;
   question: string;
   choices: Choice[];
@@ -22,14 +22,23 @@ interface QuestionsState {
 const initialState: QuestionsState = {
   questions: [],
   question: {
-    title: "New Module 123",
-    type: "MC",
+    title: "Question 123",
+    questionType: "MC",
     points: 10,
     question: "What is 3 + 3",
     choices: [
-      { option: "6", isCorrect: true },
-      { option: "5", isCorrect: false },
-      { option: "7", isCorrect: false },     
+      {
+        text: "A. 4",
+        isCorrect: true,
+      },
+      {
+        text: "B. 5",
+        isCorrect: false,
+      },
+      {
+        text: "C. 6",
+        isCorrect: false,
+      },
     ],
   },
 };
