@@ -1,44 +1,59 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../../store";
+import { setQuiz } from "../../quizzesReducer";
 
 export default function QuizDetailsEditor () {
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
-    const [quizName, setQuizName] = useState(quiz ? quiz.title : "Unnamed Quiz");
+    const dispatch = useDispatch();
 
     return (
         <div className="container-fluid">
-        <hr />
+        
 
         <h2>Quiz Name</h2>
-        <input value={quizName}
-                className="form-control mb-2" 
-                onChange={(e) => setQuizName(e.target.value)}/>
+        <input value={quiz.title}
+            type="text"
+            className="form-control mb-2" 
+            placeholder="unnamed quiz"
+            onChange={(e) => 
+                dispatch(setQuiz({ ...quiz, name: e.target.value }))}/>
         <div className="mb-3">
             <textarea 
             className="form-control"
-            placeholder="This should be description of the quiz."
+            placeholder="This should be instruction of the quiz."
             rows={3}></textarea>
         </div>  
         <div className="container">
             <div className="mb-3 row justify-content-center">
-            <label htmlFor="points" className="col-sm-3 col-form-label" style={{ paddingLeft: "200px", paddingRight: "50px" }}>
-                Points
-            </label>
-            <div className="col-sm-7">
-                <input type="number" className="form-control" id="points" />
-            </div>
+                <label htmlFor="points" className="col-sm-3 col-form-label" style={{ paddingLeft: "200px", paddingRight: "50px" }}>
+                    Points
+                </label>
+                <div className="col-sm-7">
+                    <input type="number" className="form-control" id="points" />
+                </div>
             </div>
             <div className="mb-3 row justify-content-center">
-            <label htmlFor="group" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
-                Assignment Group
-            </label>
-            <select id="group" className="form-select col-sm-8" style={{ width: "400px", marginLeft: "20px" }}>
-                <option selected>ASSIGNMENT</option>
-                <option value="quiz">QUIZ</option>
-                <option value="exam">EXAM</option>
-                <option value="project">PROJECT</option>
-            </select>
+                <label htmlFor="group" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
+                    Quiz Type
+                </label>
+                <select id="group" className="form-select col-sm-8" style={{ width: "400px", marginLeft: "20px" }}>
+                    <option selected>Graded Quiz</option>
+                    <option value="quiz">Practice Quiz</option>
+                    <option value="exam">Graded Survey</option>
+                    <option value="project">Ungraded Survey</option>
+                </select>
+            </div>
+            <div className="mb-3 row justify-content-center">
+                <label htmlFor="group" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
+                    Assignment Group
+                </label>
+                <select id="group" className="form-select col-sm-8" style={{ width: "400px", marginLeft: "20px" }}>
+                    <option selected>ASSIGNMENT</option>
+                    <option value="quiz">QUIZ</option>
+                    <option value="exam">EXAM</option>
+                    <option value="project">PROJECT</option>
+                </select>
             </div>
             <div className="mb-3 row justify-content-center">
             <label htmlFor="display_grade-as" className="col-sm-4 col-form-label" style={{ paddingLeft: "50px", paddingRight: "50px" }}>
