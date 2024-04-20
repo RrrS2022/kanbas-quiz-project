@@ -14,12 +14,15 @@ interface Quiz {
   timelimit: Number;
   shuffleAnswers: boolean;
   multipleAttempts: boolean;
-  showAnswers: boolean;
+  showAnswers: string;
   accessCode: string;
   oneQuestionataTime: boolean;
   webCam: boolean;
   lockQuestion: boolean;
-
+  type: string;
+  group: string;
+  responses: string;
+  viewResult: boolean
 
 }
 
@@ -35,8 +38,9 @@ const initialState: QuizzesState = {
     points: 100, questionNumber: 10, dueDate: "2024-05-10",
     availableFromDate: "2024-02-15", availableUntilDate: "2024-05-15",
     published: true, timelimit:20, shuffleAnswers: true, multipleAttempts: false,
-    showAnswers: false, accessCode: "", oneQuestionataTime: true, webCam: false,
-    lockQuestion: false,
+    showAnswers: "Immediately", accessCode: "", oneQuestionataTime: true, webCam: false,
+    lockQuestion: false, type: "Graded Quiz", group: "QUIZZES", responses: "Always",
+    viewResult: false
 
 },
   };

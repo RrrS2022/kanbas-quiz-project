@@ -47,28 +47,29 @@ export default function QuizEditor () {
                     <Route path="/Question" element={<QuestionEditor />} />
                 </Routes>
                 <hr />
-                <div className="d-flex">
-                    <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"
-                        style={{marginRight:"5px"}} />
-                    <label className="form-check-label" htmlFor="defaultCheck1"
-                        style={{marginRight:30}}>
-                            Notify users this quiz has changed
-                    </label>
-                    <Link to={`/Kanbas/Courses/${courseId}/Quizzes`}
-                        className="btn btn-light"
-                        style={{marginRight:"5px"}}>
-                        Cancel
-                    </Link>
-                    <button className="btn btn-light"
-                        style={{marginRight:"5px"}}>
-                        Save&Publish
-                    </button>
-                    <button className="btn btn-danger">
-                        Save
-                    </button>
-
-
-
+                <div className="d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center">
+                        <input className="form-check-input" type="checkbox" value="" id="defaultCheck1"
+                            style={{marginRight:"5px"}} />
+                        <label className="form-check-label" htmlFor="defaultCheck1"
+                            style={{marginRight:"30x"}}>
+                                Notify users this quiz has changed
+                        </label>
+                    </div>
+                    <span className="float-right">
+                        <Link to={`/Kanbas/Courses/${courseId}/Quizzes`}
+                            className="btn btn-light"
+                            style={{marginRight:"5px"}}>
+                            Cancel
+                        </Link>
+                        <button className="btn btn-light"
+                            style={{marginRight:"5px"}}>
+                            Save&Publish
+                        </button>
+                        <button className="btn btn-danger">
+                            Save
+                        </button>
+                    </span>
 
                 </div>
 
