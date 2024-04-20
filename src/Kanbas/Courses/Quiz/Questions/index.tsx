@@ -39,7 +39,7 @@ function QuizQuestions() {
                     <button className="btn btn-light me-2"><FaEllipsisV /></button>
                 </div>
             </div>
-            {questionList.filter((question) => question.quiz === quizId).map((assignment, index) => (
+            {questionList.filter((question) => question.quiz === quizId).map((question, index) => (
                 // <Link to={`/Kanbas/Courses/${courseId}/Assignments/${assignment._id}`}
                 //   className="list-group-item list-group-item-action"
                 //   key={assignment._id}
