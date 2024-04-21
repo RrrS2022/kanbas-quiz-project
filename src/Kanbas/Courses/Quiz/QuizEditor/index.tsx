@@ -1,16 +1,28 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
 import { FaBan, FaCheckCircle, FaEllipsisV } from "react-icons/fa";
-import { Link, useParams, useLocation, Route, Routes } from "react-router-dom";
+import { Link, useParams, useLocation, Route, Routes, useNavigate } from "react-router-dom";
 import QuizDetailsEditor from "./DetailsEditor";
 import QuestionEditor from "./QuestionsEditor";
+import * as quizClient from "../client"; 
+import { selectQuiz } from "../quizzesReducer";
 
 export default function QuizEditor () {
     const quiz = useSelector((state: KanbasState) => 
         state.quizzesReducer.quiz);
     const { courseId, quizId } = useParams();
     const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleSave = () => {
+        quizClient.updateQuiz(quiz).then(() => {
+            dispatch(selectQuiz({quiz}));
+        });
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/{quizId}`);
+    };
+
+    const handleSaveAndPublish = () => {};
 
     return (
         <div>
@@ -66,7 +78,8 @@ export default function QuizEditor () {
                             style={{marginRight:"5px"}}>
                             Save&Publish
                         </button>
-                        <button className="btn btn-danger">
+                        <button className="btn btn-danger"
+                            onClick={handleSave}>
                             Save
                         </button>
                     </span>
