@@ -89,7 +89,7 @@ export default function QuizDetailsEditor () {
                     Show Correct Answer
                 </label>
                 <div className="col-sm-6">
-                    <input type="number" className="form-control" id="points"
+                    <input type="text" className="form-control" id="points"
                         value={quiz.showAnswers} 
                         placeholder="Immediately"
                         onChange={(e) => dispatch(selectQuiz({ ...quiz, showAnswers: e.target.value }))}/>
@@ -100,10 +100,10 @@ export default function QuizDetailsEditor () {
                     View Responses
                 </label>
                 <div className="col-sm-6">
-                    <input type="number" className="form-control" id="points"
-                        value={quiz.showAnswers} 
+                    <input type="text" className="form-control" id="points"
+                        value={quiz.responses} 
                         placeholder="Always"
-                        onChange={(e) => dispatch(selectQuiz({ ...quiz, showAnswers: e.target.value }))}/>
+                        onChange={(e) => dispatch(selectQuiz({ ...quiz, responses: e.target.value }))}/>
                 </div>
             </div>
             <div className="row mb-3">
@@ -112,7 +112,7 @@ export default function QuizDetailsEditor () {
                     <div className="form-check">
                         <input className="form-check-input" type="checkbox" 
                             id="shuffle_answer" defaultChecked={quiz.shuffleAnswers} 
-                            onChange={handleChange}/>
+                            onChange={(e) => dispatch(selectQuiz({ ...quiz, shuffleAnswers: e.target.checked }))}/>
                         <label className="form-check-label" htmlFor="shuffle_answer">
                             Shuffle Answers
                         </label>
@@ -127,14 +127,14 @@ export default function QuizDetailsEditor () {
                         </div>
                         <input className="form-control" type="number" value={quiz.timelimit} 
                             style={{width:"60px", marginLeft:"50px", marginRight:"20px"}}
-                            onChange={handleChange}/> Mintues
+                            onChange={(e) => dispatch(selectQuiz({ ...quiz, timelimit: e.target.value }))}/> Mintues
                     </div>
                     <div className="form-group justify-content-center" 
                         style={{border:"solid 1px #ccc", height: "auto", borderRadius: "8px", marginTop:"5px"}}>
                         <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
                             <input className="form-check-input" type="checkbox" 
                                 id="multiple_attempts" defaultChecked={quiz.multipleAttempts}
-                                onChange={handleChange} />
+                                onChange={(e) => dispatch(selectQuiz({ ...quiz, multipleAttempts: e.target.checked }))} />
                             <label className="form-check-label" htmlFor="multiple_attempts">
                                 Allow Multiple Attempts
                             </label>
@@ -143,7 +143,7 @@ export default function QuizDetailsEditor () {
                         <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
                             <input className="form-check-input" type="checkbox" 
                                 id="one_q_a_time" defaultChecked={quiz.oneQuestionataTime}
-                                onChange={handleChange} />
+                                onChange={(e) => dispatch(selectQuiz({ ...quiz, oneQuestionataTime: e.target.checked }))} />
                             <label className="form-check-label" htmlFor="one_q_a_time">
                                 One Quiestion at a Time
                             </label>
@@ -151,7 +151,7 @@ export default function QuizDetailsEditor () {
                         <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
                             <input className="form-check-input" type="checkbox" 
                                 id="webcam_required" defaultChecked={quiz.webCam}
-                                onChange={handleChange} />
+                                onChange={(e) => dispatch(selectQuiz({ ...quiz, webCam: e.target.checked }))} />
                             <label className="form-check-label" htmlFor="webcam_required">
                                 Webcam Required
                             </label>
@@ -159,7 +159,7 @@ export default function QuizDetailsEditor () {
                         <div className="form-check" style={{marginTop:"10px", marginRight: "5px"}}>
                             <input className="form-check-input" type="checkbox" 
                                 id="lock_after_answer" defaultChecked={quiz.lockQuestion}
-                                onChange={handleChange} />
+                                onChange={(e) => dispatch(selectQuiz({ ...quiz, lockQuestion: e.target.checked }))} />
                             <label className="form-check-label" htmlFor="lock_after_answer">
                                 Lock Questions After Answering
                             </label>
@@ -182,18 +182,21 @@ export default function QuizDetailsEditor () {
           <div className="mb-3">
             <label htmlFor="due" className="form-label"><h4>Due</h4></label>
             <input type="date" className="form-control" id="due" 
-                value={quiz.dueDate} onChange={handleChange}/>
+                value={quiz.dueDate} 
+                onChange={(e) => dispatch(selectQuiz({ ...quiz, dueDate: e.target.value }))}/>
           </div>
           <div className="mb-3 row">
             <div className="col">
               <h4>Available from</h4>
               <input type="date" className="form-control" 
-                value={quiz.availableFromDate} onChange={handleChange}/>
+                value={quiz.availableFromDate} 
+                onChange={(e) => dispatch(selectQuiz({ ...quiz, availableFromDate: e.target.value }))}/>
             </div>
             <div className="col">
               <h4>Until</h4>
               <input type="date" className="form-control" 
-                value={quiz.availableUntilDate} onChange={handleChange}/>
+                value={quiz.availableUntilDate} 
+                onChange={(e) => dispatch(selectQuiz({ ...quiz, availableUntilDate: e.target.value }))}/>
             </div>
           </div>
           <div className="row" style={{ paddingBottom: "15px", paddingTop: "10px", backgroundColor: "#F5F5F5" }}>

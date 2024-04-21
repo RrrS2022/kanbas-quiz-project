@@ -6,7 +6,7 @@ import { Link, useParams, useLocation, Route, Routes, useNavigate } from "react-
 import QuizDetailsEditor from "./DetailsEditor";
 import QuestionEditor from "./QuestionsEditor";
 import * as quizClient from "../client"; 
-import { selectQuiz } from "../quizzesReducer";
+import { addQuiz, selectQuiz, updateQuiz } from "../quizzesReducer";
 
 export default function QuizEditor () {
     const quiz = useSelector((state: KanbasState) => 
@@ -15,14 +15,23 @@ export default function QuizEditor () {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const handleSave = () => {
-        quizClient.updateQuiz(quiz).then(() => {
-            dispatch(selectQuiz({quiz}));
-        });
-        navigate(`/Kanbas/Courses/${courseId}/Quizzes/{quizId}`);
-    };
 
-    const handleSaveAndPublish = () => {};
+    const handleSave =async () => {
+        const status = await quizClient.updateQuiz(quiz);
+        dispatch(updateQuiz(quiz));
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/{quizId}/`);
+      };
+
+    const handleSaveAndPublish = () => {
+        if (typeof courseId === 'string') {
+            quizClient.createQuiz(courseId, quiz).then((quiz) => {
+              dispatch(addQuiz(quiz));
+            });
+          } else {
+            console.error('courseId is undefined');
+          };
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/`);
+    };
 
     return (
         <div>
@@ -75,7 +84,8 @@ export default function QuizEditor () {
                             Cancel
                         </Link>
                         <button className="btn btn-light"
-                            style={{marginRight:"5px"}}>
+                            style={{marginRight:"5px"}}
+                            onClick={handleSaveAndPublish}>
                             Save&Publish
                         </button>
                         <button className="btn btn-danger"
