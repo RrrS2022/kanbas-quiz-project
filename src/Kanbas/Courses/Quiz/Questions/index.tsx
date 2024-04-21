@@ -17,11 +17,11 @@ import "./index.css";
 interface Question {
     _id?: string;
     title: string;
-    type: string;
+    questionType: string;
     points: number;
     question: string;
-    options: string[]; 
-    answers: string; 
+    options: string[];
+    answers: string;
 }
 
 interface QuestionEditorProps {
@@ -37,17 +37,29 @@ interface QuestionEditorProps {
 
 const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
     const handleInputChange = (e: any) => {
-        setQuestion({ ...question, answers: e.target.value });
+        setQuestion({ ...question, options: ["N/A"], answers: e.target.value });
+    };
+
+    const handleTitleChange = (e: any) => {
+        setQuestion({ ...question, title: e.target.value });
     };
 
     return (
         <div className="quiz-question-editor">
+            <div className="question-header">
+                <input
+                    type="text"
+                    placeholder="Question Title"
+                    className="question-title-input"
+                    onChange={handleTitleChange}
+                />
+            </div>
             <div className="question-body">
                 <label className="question-label">Question:</label>
                 <textarea
                     name="question"
                     value={question.question}
-                    onChange={(e) => setQuestion({ ...question, question: e.target.value })}
+                    onChange={(e) => setQuestion({ ...question, question: e.target.value, questionType: "TF" })}
                     placeholder="Enter your question"
                     className="question-textarea"
                 ></textarea>
@@ -81,18 +93,52 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({ question, setQ
 
 
 const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
-    const handleInputChange = (e: any) => {
-        setQuestion({ ...question, [e.target.name]: e.target.value });
+    const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setQuestion({ ...question, question: e.target.value });
     };
 
-    const handleOptionChange = (index: any, value: any) => {
+    const handleOptionChange = (index: number, value: string) => {
         const newOptions = [...question.options];
         newOptions[index] = value;
         setQuestion({ ...question, options: newOptions });
+        if (question.answers === question.options[index]) {
+            setQuestion({ ...question, answers: value });
+        }
+    };
+
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuestion({ ...question, title: e.target.value });
+    };
+
+    const handleAddOption = () => {
+        setQuestion({ ...question, options: [...question.options, ''] });
+    };
+
+    const handleDeleteOption = (index: number) => {
+        const newOptions = [...question.options];
+        // Check if the option being deleted is the correct answer
+        if (question.answers === newOptions[index]) {
+            setQuestion({ ...question, answers: '' });
+        }
+        newOptions.splice(index, 1);
+        setQuestion({ ...question, options: newOptions });
+    };
+
+    const handleCorrectAnswerChange = (value: string) => {
+        setQuestion({ ...question, answers: value });
     };
 
     return (
         <div className="quiz-question-editor">
+            <div className="question-header">
+                <input
+                    type="text"
+                    value={question.title}
+                    placeholder="Question Title"
+                    className="question-title-input"
+                    onChange={handleTitleChange}
+                />
+            </div>
             <div className="question-body">
                 <label className="question-label">Question:</label>
                 <textarea
@@ -104,22 +150,37 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion 
                 ></textarea>
             </div>
             {question.options.map((option, index) => (
-                <div key={index}>
-                    <input
-                        type="text"
+                <div key={index} className="answer possible-answer">
+                    <label className="answer-label">Possible Answer</label>
+                    <textarea
                         value={option}
                         onChange={(e) => handleOptionChange(index, e.target.value)}
-                        className="option-input"
-                    />
+                        placeholder="Answer text"
+                        className="answer-textarea"
+                    ></textarea>
+                    <div className="icons-container">
+                        <label className="correct-answer">Correct</label>
+                        <input
+                            type="radio"
+                            name="correct-answer"
+                            checked={question.answers === option}
+                            onChange={() => handleCorrectAnswerChange(option)}
+                            className="correct-answer-radio"
+                        />
+                        <MdEdit className="edit-icon" />
+                        <MdDelete className="delete-icon" onClick={() => handleDeleteOption(index)} />
+                    </div>
                 </div>
             ))}
-            <button onClick={() => setQuestion({
-                ...question,
-                options: [...question.options, '']
-            })}>Add Option</button>
+            <button onClick={handleAddOption} className="add-answer-button">
+                <IoIosAdd /> Add Option
+            </button>
         </div>
     );
 };
+
+
+
 
 
 const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
@@ -133,8 +194,30 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }
         setQuestion({ ...question, options: newBlanks });
     };
 
+    const handleAddBlank = () => {
+        setQuestion({ ...question, options: [...question.options, ''], questionType: "BLANKS" });
+    };
+
+    const handleDeleteBlank = (index: number) => {
+        const newBlanks = [...question.options];
+        newBlanks.splice(index, 1);
+        setQuestion({ ...question, options: newBlanks });
+    };
+
+    const handleTitleChange = (e: any) => {
+        setQuestion({ ...question, title: e.target.value });
+    };
+
     return (
         <div className="quiz-question-editor">
+            <div className="question-header">
+                <input
+                    type="text"
+                    placeholder="Question Title"
+                    className="question-title-input"
+                    onChange={handleTitleChange}
+                />
+            </div>
             <div className="question-body">
                 <label className="question-label">Question:</label>
                 <textarea
@@ -145,21 +228,26 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }
                     className="question-textarea"
                 ></textarea>
             </div>
-            {question.options.map((blank, index) => (
-                <div key={index}>
-                    <input
-                        type="text"
-                        value={blank}
-                        onChange={(e) => handleBlankChange(index, e.target.value)}
-                        className="blank-input"
-                    />
-                </div>
-            ))}
-            <button onClick={() => setQuestion({
-                ...question,
-                options: [...question.options, '']
-            })}>Add Blank</button>
-        </div>
+            {
+                question.options.map((blank, index) => (
+                    <div key={index} className="answer possible-answer">
+                        <label className="answer-label">Possible Answer</label>
+                        <textarea
+                            value={blank}
+                            onChange={(e) => handleBlankChange(index, e.target.value)}
+                            placeholder="Answer text"
+                            className="answer-textarea"
+                        ></textarea>
+                        <div className="icons-container">
+                            <MdDelete className="delete-icon" onClick={() => handleDeleteBlank(index)} />
+                        </div>
+                    </div>
+                ))
+            }
+            <button className="add-answer-button" onClick={handleAddBlank}>
+                <IoIosAdd /> Add Another Answer
+            </button>
+        </div >
     );
 };
 
@@ -198,7 +286,7 @@ export default function QuizQuestions() {
         if (currentQuestion._id) {
             dispatch(updateQuestion({ ...currentQuestion }));
         } else {
-            if (quizId) { 
+            if (quizId) {
                 const added = await client.createQuestion(quizId, currentQuestion);
                 dispatch(addQuestion(added));
             } else {
@@ -206,8 +294,11 @@ export default function QuizQuestions() {
             }
         }
         setShowEditor(false);
+        setQuestionType('multiple-choice');
     };
-    
+
+
+
 
 
     interface Question {
@@ -237,23 +328,27 @@ export default function QuizQuestions() {
                 return null;
         }
     };
-    
+
 
     const handleAddQuestion = () => {
-        editQuestion();
+        const newQuestion = {
+            ...defaultQuestion,
+            questionType: questionType,
+        };
+        editQuestion(newQuestion);
     };
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            if (quizId) {  // Ensure quizId is not undefined
+            if (quizId) {
                 const questions = await client.findAllQuestionsForQuiz(quizId);
                 dispatch(setQuestions(questions));
             }
         };
-    
+
         fetchQuestions();
     }, [quizId, dispatch]);
-    
+
 
     return (
         <div className="quiz-container">
@@ -335,11 +430,6 @@ export default function QuizQuestions() {
             {showEditor && (
                 <div className="quiz-question-editor">
                     <div className="question-header">
-                        <input
-                            type="text"
-                            placeholder="Question Title"
-                            className="question-title-input"
-                        />
                         <select
                             className="question-type-select"
                             value={questionType}

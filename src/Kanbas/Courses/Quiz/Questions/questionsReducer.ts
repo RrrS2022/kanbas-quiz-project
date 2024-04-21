@@ -28,7 +28,7 @@ const questionsSlice = createSlice({
       state.questions = action.payload;
     },
     addQuestion(state, action: PayloadAction<Question>) {
-      state.questions = [action.payload, ...state.questions];
+      state.questions = [ ...state.questions, action.payload];
     },
     updateQuestion(state, action: PayloadAction<Question>) {
       const index = state.questions.findIndex(q => q._id === action.payload._id);
