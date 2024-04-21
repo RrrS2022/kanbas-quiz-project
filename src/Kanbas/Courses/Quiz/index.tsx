@@ -166,7 +166,7 @@ function Quiz() {
                   <FaEllipsisV className="me-2" />
                 </button>
                 <div className="dropdown-menu">
-                  <Link className="dropdown-item" to={`/Kanbas/Courses/${courseId}/Quiz/${quiz._id}`}>Edit</Link>
+                  <Link className="dropdown-item" to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`}>Edit</Link>
                   <button onClick={(event) => handleDelete(event, quiz._id)} className="dropdown-item">Delete</button>
                   <button onClick={() => togglePublishStatus(quiz._id, quiz.published)} className="dropdown-item">
                     {quiz.published ? 'Unpublish' : 'Publish'}
