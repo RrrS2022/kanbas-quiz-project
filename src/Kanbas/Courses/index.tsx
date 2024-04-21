@@ -22,6 +22,7 @@ import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
 import QuizQuestionsEditor from "./Quiz/Questions/QuestionsEditor";
 import MultipleChoices from "./Quiz/Questions/MultipleChoice";
+import TrueOrFalse from "./Quiz/Questions/TrueOrFalse";
 
 function Courses() {
   const { courseId } = useParams();
@@ -87,6 +88,10 @@ function Courses() {
               <Route
                 path="Quiz/:quizId/question/multiplechoices"
                 element={<MultipleChoices />}
+              />
+              <Route
+                path="Quiz/:quizId/question/truefalse"
+                element={<TrueOrFalse />}
               />
 
               <Route

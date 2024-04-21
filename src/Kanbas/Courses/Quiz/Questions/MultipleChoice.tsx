@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import "./MultipleChoices.css";
+import "./index.css";
 
 export default function MultipleChoices() {
   return (
@@ -19,7 +19,7 @@ export default function MultipleChoices() {
           <option value="fill-in-the-bank">Fill In The Blank</option>
         </select>
         <div className="points-container"></div>
-        <span className="points-label">pts: </span>
+        <span>pts: </span>
         <input
           type="number"
           placeholder="1"
