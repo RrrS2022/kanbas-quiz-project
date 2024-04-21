@@ -12,6 +12,7 @@ import {
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./index.css";
+import { updateAssignment } from "../../Assignments/client";
 
 
 interface Question {
@@ -72,7 +73,7 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({ question, setQ
                             type="radio"
                             name="answers"
                             value="True"
-                            defaultChecked={question.answers[0] === "True"}
+                            defaultChecked={question.answers == "True"}
                             onChange={handleInputChange}
                         /> True
                     </label>
@@ -81,7 +82,7 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({ question, setQ
                             type="radio"
                             name="answers"
                             value="False"
-                            defaultChecked={question.answers[0] === "False"}
+                            defaultChecked={question.answers == "False"}
                             onChange={handleInputChange}
                         /> False
                     </label>
@@ -116,7 +117,6 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion 
 
     const handleDeleteOption = (index: number) => {
         const newOptions = [...question.options];
-        // Check if the option being deleted is the correct answer
         if (question.answers === newOptions[index]) {
             setQuestion({ ...question, answers: '' });
         }
@@ -163,7 +163,7 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion 
                         <input
                             type="radio"
                             name="correct-answer"
-                            checked={question.answers === option}
+                            checked={question.answers == option}
                             onChange={() => handleCorrectAnswerChange(option)}
                             className="correct-answer-radio"
                         />
@@ -181,8 +181,6 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion 
 
 
 
-
-
 const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
     const handleInputChange = (e: any) => {
         setQuestion({ ...question, [e.target.name]: e.target.value });
@@ -196,6 +194,7 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }
 
     const handleAddBlank = () => {
         setQuestion({ ...question, options: [...question.options, ''], questionType: "BLANKS" });
+        console.log(question.options)
     };
 
     const handleDeleteBlank = (index: number) => {
@@ -232,6 +231,7 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }
                 question.options.map((blank, index) => (
                     <div key={index} className="answer possible-answer">
                         <label className="answer-label">Possible Answer</label>
+                        
                         <textarea
                             value={blank}
                             onChange={(e) => handleBlankChange(index, e.target.value)}
@@ -256,7 +256,7 @@ export default function QuizQuestions() {
 
     const defaultQuestion = {
         title: '',
-        type: 'multiple-choice',
+        type: 'MC',
         points: 1,
         question: '',
         options: [],
@@ -269,22 +269,19 @@ export default function QuizQuestions() {
         state.questionReducer.questions);
     const [showEditor, setShowEditor] = useState(false);
     const navigate = useNavigate();
-    const [questionType, setQuestionType] = useState('multiple-choice');
+    const [questionType, setQuestionType] = useState('MC');
     const dispatch = useDispatch();
     const question = useSelector((state: KanbasState) =>
         state.questionReducer.question) || defaultQuestion;
 
     const [currentQuestion, setCurrentQuestion] = useState(question);
 
-    const editQuestion = (questionToEdit = defaultQuestion) => {
-        setCurrentQuestion(questionToEdit);
-        setShowEditor(true);
-    };
 
 
     const handleQuestionSave = async () => {
-        if (currentQuestion._id) {
-            dispatch(updateQuestion({ ...currentQuestion }));
+        if (currentQuestion._id && quizId) {
+            await client.updateQuestion(quizId, currentQuestion._id, currentQuestion)
+            dispatch(updateQuestion(currentQuestion ));
         } else {
             if (quizId) {
                 const added = await client.createQuestion(quizId, currentQuestion);
@@ -294,23 +291,8 @@ export default function QuizQuestions() {
             }
         }
         setShowEditor(false);
-        setQuestionType('multiple-choice');
+        setQuestionType('MC');
     };
-
-
-
-
-
-    interface Question {
-        _id?: string;
-        title: string;
-        type: string;
-        points: number;
-        question: string;
-        options: string[];
-        answers: string[];
-    }
-
 
     const cancelEdit = () => {
         setShowEditor(false);
@@ -318,16 +300,25 @@ export default function QuizQuestions() {
 
     const renderQuestionEditor = () => {
         switch (questionType) {
-            case 'multiple-choice':
+            case 'MC':
                 return <MultipleChoices question={currentQuestion} setQuestion={setCurrentQuestion} />;
-            case 'fill-in-the-bank':
+            case 'BLANKS':
                 return <MultipleBlanks question={currentQuestion} setQuestion={setCurrentQuestion} />;
-            case 'true-false':
+            case 'TF':
                 return <TrueFalseQuestionEditor question={currentQuestion} setQuestion={setCurrentQuestion} />;
             default:
                 return null;
         }
     };
+
+    const handleEditQuestion = (question: Question) => {
+        setCurrentQuestion(question);
+        console.log(question)
+        setQuestionType(question.questionType);
+        console.log(question.questionType)
+        setShowEditor(true);
+    };
+    
 
 
     const handleAddQuestion = () => {
@@ -335,8 +326,10 @@ export default function QuizQuestions() {
             ...defaultQuestion,
             questionType: questionType,
         };
-        editQuestion(newQuestion);
+        setCurrentQuestion(newQuestion);
+        setShowEditor(true);
     };
+
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -379,6 +372,7 @@ export default function QuizQuestions() {
                             <th scope="col">Type</th>
                             <th scope="col">Options</th>
                             <th scope="col">Answers</th>
+                            <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -403,6 +397,7 @@ export default function QuizQuestions() {
                                         {question.answers}
                                     </div>
                                 </td>
+                                <td><MdEdit className="edit-icon" onClick={() => handleEditQuestion(question)} /></td>
                             </tr>
                         ))}
                     </tbody>
@@ -435,9 +430,9 @@ export default function QuizQuestions() {
                             value={questionType}
                             onChange={(e) => setQuestionType(e.target.value)}
                         >
-                            <option value="multiple-choice">Multiple Choice</option>
-                            <option value="true-false">True/False</option>
-                            <option value="fill-in-the-bank">Fill In The Blank</option>
+                            <option value="MC">Multiple Choice</option>
+                            <option value="TF">True/False</option>
+                            <option value="BLANKS">Fill In The Blank</option>
                         </select>
                         <label className="points-label">pts:</label>
                         <input
