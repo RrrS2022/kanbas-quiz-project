@@ -3,6 +3,7 @@ import { quizzes } from "../../Database";
 
 interface Quiz {
   _id?: string;
+  courseId: string
   title: string;
   description: string;
   points: number;
@@ -34,6 +35,7 @@ interface QuizzesState {
 const initialState: QuizzesState = {
   quizzes: [],
   quiz: {
+    courseId: "",
     title: "New Quiz", description: "this is the new quiz",
     points: 100, questionNumber: 10, dueDate: "2024-05-10",
     availableFromDate: "2024-02-15", availableUntilDate: "2024-05-15",
