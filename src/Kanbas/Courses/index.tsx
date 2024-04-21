@@ -21,6 +21,7 @@ import Quiz from "./Quiz";
 import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
 import QuizQuestionsEditor from "./Quiz/Questions/QuestionsEditor";
+import MultipleChoices from "./Quiz/Questions/MultipleChoice";
 
 function Courses() {
   const { courseId } = useParams();
@@ -83,6 +84,11 @@ function Courses() {
                 path="Quiz/:quizId/question/editor"
                 element={<QuizQuestionsEditor />}
               />
+              <Route
+                path="Quiz/:quizId/question/multiplechoices"
+                element={<MultipleChoices />}
+              />
+
               <Route
                 path="Assignments/:assignmentId"
                 element={<AssignmentEditor />}
