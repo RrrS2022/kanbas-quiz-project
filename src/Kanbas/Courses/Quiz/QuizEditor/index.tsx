@@ -15,7 +15,6 @@ export default function QuizEditor () {
     const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
     const handleSave = () => {
         quizClient.updateQuiz(quiz).then(() => {
             dispatch(selectQuiz({quiz}));
@@ -79,7 +78,8 @@ export default function QuizEditor () {
                             style={{marginRight:"5px"}}>
                             Save&Publish
                         </button>
-                        <button className="btn btn-danger">
+                        <button className="btn btn-danger"
+                            onClick={handleSave}>
                             Save
                         </button>
                     </span>

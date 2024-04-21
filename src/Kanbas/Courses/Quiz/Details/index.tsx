@@ -15,7 +15,9 @@ export default function QuizDetails() {
     const handlePublish = () => {}
 
     // fill in the path to preview page
-    const handlePreview = () => {}
+    const handlePreview = () => {
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
+    }
 
     return(
         <div className="flex-fill ms-5 ,me-5">
