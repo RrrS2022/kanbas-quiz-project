@@ -7,16 +7,174 @@ import { useSelector, useDispatch } from "react-redux";
 import * as client from "./client";
 import { KanbasState } from "../../../store";
 import {
-    addQuestion, setQuestions, updateQuestion
+    addQuestion, setQuestions, updateQuestion,
 } from "./questionsReducer";
-import MultipleChoices from "./MultipleChoice";
-import MultipleBlanks from "./MultipleBlanks";
-import TrueFalseQuestionEditor from "./TrueOrFalse";
+import { IoIosAdd } from "react-icons/io";
+import { MdDelete, MdEdit } from "react-icons/md";
+import "./index.css";
 
 
+interface Question {
+    _id?: string;
+    title: string;
+    type: string;
+    points: number;
+    question: string;
+    options: string[]; 
+    answers: string; 
+}
+
+interface QuestionEditorProps {
+    question: Question;
+    setQuestion: (question: Question) => void;
+}
+
+interface QuestionEditorProps {
+    question: Question;
+    setQuestion: (question: Question) => void;
+}
+
+
+const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
+    const handleInputChange = (e: any) => {
+        setQuestion({ ...question, answers: e.target.value });
+    };
+
+    return (
+        <div className="quiz-question-editor">
+            <div className="question-body">
+                <label className="question-label">Question:</label>
+                <textarea
+                    name="question"
+                    value={question.question}
+                    onChange={(e) => setQuestion({ ...question, question: e.target.value })}
+                    placeholder="Enter your question"
+                    className="question-textarea"
+                ></textarea>
+            </div>
+            <div className="answers-section">
+                <label className="answers-label">Answers:</label>
+                <div className="answer-options">
+                    <label className="answer-option">
+                        <input
+                            type="radio"
+                            name="answers"
+                            value="True"
+                            defaultChecked={question.answers[0] === "True"}
+                            onChange={handleInputChange}
+                        /> True
+                    </label>
+                    <label className="answer-option">
+                        <input
+                            type="radio"
+                            name="answers"
+                            value="False"
+                            defaultChecked={question.answers[0] === "False"}
+                            onChange={handleInputChange}
+                        /> False
+                    </label>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const MultipleChoices: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
+    const handleInputChange = (e: any) => {
+        setQuestion({ ...question, [e.target.name]: e.target.value });
+    };
+
+    const handleOptionChange = (index: any, value: any) => {
+        const newOptions = [...question.options];
+        newOptions[index] = value;
+        setQuestion({ ...question, options: newOptions });
+    };
+
+    return (
+        <div className="quiz-question-editor">
+            <div className="question-body">
+                <label className="question-label">Question:</label>
+                <textarea
+                    name="question"
+                    value={question.question}
+                    onChange={handleInputChange}
+                    placeholder="Enter your question"
+                    className="question-textarea"
+                ></textarea>
+            </div>
+            {question.options.map((option, index) => (
+                <div key={index}>
+                    <input
+                        type="text"
+                        value={option}
+                        onChange={(e) => handleOptionChange(index, e.target.value)}
+                        className="option-input"
+                    />
+                </div>
+            ))}
+            <button onClick={() => setQuestion({
+                ...question,
+                options: [...question.options, '']
+            })}>Add Option</button>
+        </div>
+    );
+};
+
+
+const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }) => {
+    const handleInputChange = (e: any) => {
+        setQuestion({ ...question, [e.target.name]: e.target.value });
+    };
+
+    const handleBlankChange = (index: any, value: any) => {
+        const newBlanks = [...question.options];
+        newBlanks[index] = value;
+        setQuestion({ ...question, options: newBlanks });
+    };
+
+    return (
+        <div className="quiz-question-editor">
+            <div className="question-body">
+                <label className="question-label">Question:</label>
+                <textarea
+                    name="question"
+                    value={question.question}
+                    onChange={handleInputChange}
+                    placeholder="Enter your question"
+                    className="question-textarea"
+                ></textarea>
+            </div>
+            {question.options.map((blank, index) => (
+                <div key={index}>
+                    <input
+                        type="text"
+                        value={blank}
+                        onChange={(e) => handleBlankChange(index, e.target.value)}
+                        className="blank-input"
+                    />
+                </div>
+            ))}
+            <button onClick={() => setQuestion({
+                ...question,
+                options: [...question.options, '']
+            })}>Add Blank</button>
+        </div>
+    );
+};
 
 
 export default function QuizQuestions() {
+
+    const defaultQuestion = {
+        title: '',
+        type: 'multiple-choice',
+        points: 1,
+        question: '',
+        options: [],
+        answers: [],
+    };
+
     const { quizId } = useParams();
     const [selectQuestionId, setSelectQuestionId] = useState("");
     const questionList = useSelector((state: KanbasState) =>
@@ -26,7 +184,30 @@ export default function QuizQuestions() {
     const [questionType, setQuestionType] = useState('multiple-choice');
     const dispatch = useDispatch();
     const question = useSelector((state: KanbasState) =>
-        state.questionReducer.question);
+        state.questionReducer.question) || defaultQuestion;
+
+    const [currentQuestion, setCurrentQuestion] = useState(question);
+
+    const editQuestion = (questionToEdit = defaultQuestion) => {
+        setCurrentQuestion(questionToEdit);
+        setShowEditor(true);
+    };
+
+
+    const handleQuestionSave = async () => {
+        if (currentQuestion._id) {
+            dispatch(updateQuestion({ ...currentQuestion }));
+        } else {
+            if (quizId) { 
+                const added = await client.createQuestion(quizId, currentQuestion);
+                dispatch(addQuestion(added));
+            } else {
+                console.error('Quiz ID is undefined');
+            }
+        }
+        setShowEditor(false);
+    };
+    
 
 
     interface Question {
@@ -39,49 +220,40 @@ export default function QuizQuestions() {
         answers: string[];
     }
 
-    const handleShowEditor = () => {
-        setShowEditor(true);
-    };
 
-    const handleQuestionSave = () => {
-        setShowEditor(false);
-    };
-
-    const handleQuestionCancel = () => {
+    const cancelEdit = () => {
         setShowEditor(false);
     };
 
     const renderQuestionEditor = () => {
         switch (questionType) {
             case 'multiple-choice':
-                return <MultipleChoices />;
+                return <MultipleChoices question={currentQuestion} setQuestion={setCurrentQuestion} />;
             case 'fill-in-the-bank':
-                return <MultipleBlanks />;
+                return <MultipleBlanks question={currentQuestion} setQuestion={setCurrentQuestion} />;
             case 'true-false':
-                return <TrueFalseQuestionEditor />;
+                return <TrueFalseQuestionEditor question={currentQuestion} setQuestion={setCurrentQuestion} />;
             default:
                 return null;
         }
     };
-
-
-
-    useEffect(() => {
-        if (quizId !== undefined) {
-            client.findAllQuestionsForQuiz(quizId)
-                .then((questions) => dispatch(setQuestions(questions)));
-        }
-    }, [quizId, dispatch]);
+    
 
     const handleAddQuestion = () => {
-        if (typeof quizId === 'string') {
-            client.createQuestion(quizId, question).then((question) => {
-                dispatch(addQuestion(question));
-            });
-        } else {
-            console.error('courseId is undefined');
-        }
+        editQuestion();
     };
+
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            if (quizId) {  // Ensure quizId is not undefined
+                const questions = await client.findAllQuestionsForQuiz(quizId);
+                dispatch(setQuestions(questions));
+            }
+        };
+    
+        fetchQuestions();
+    }, [quizId, dispatch]);
+    
 
     return (
         <div className="quiz-container">
@@ -133,11 +305,7 @@ export default function QuizQuestions() {
                                 </td>
                                 <td>
                                     <div className="answers-list">
-                                        {question.answers.map((answer: string, index: number) => (
-                                            <div key={index}>
-                                                {answer}
-                                            </div>
-                                        ))}
+                                        {question.answers}
                                     </div>
                                 </td>
                             </tr>
@@ -150,7 +318,7 @@ export default function QuizQuestions() {
             <div className="actions">
                 <div className="spacer"></div>
                 {!showEditor && (
-                    <button className="action-button" onClick={handleShowEditor}>
+                    <button className="action-button" onClick={handleAddQuestion}>
                         <IoMdAdd /> New Question
                     </button>
                 )}
@@ -191,7 +359,7 @@ export default function QuizQuestions() {
                     <hr />
                     {renderQuestionEditor()}
                     <div className="question-footer">
-                        <button className="cancel-button" onClick={handleQuestionCancel}>Cancel</button>
+                        <button className="cancel-button" onClick={cancelEdit}>Cancel</button>
                         <button className="update-question-button" onClick={handleQuestionSave}>Update Question</button>
                     </div>
                 </div>

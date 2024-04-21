@@ -1,6 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Question {
   _id?: string;
@@ -9,61 +7,43 @@ interface Question {
   points: number;
   question: string;
   options: string[];
-  answers: string[]
+  answers: string;
 }
 
 interface QuestionsState {
   questions: Question[];
-  question: Question;
+  question: Question | null;
 }
 
 const initialState: QuestionsState = {
   questions: [],
-  question: {
-    title: "Question 123",
-    questionType: "MC",
-    points: 10,
-    question: "What is 3 + 3",
-    options: ["A. 4", "B. 5", "C. 6"],
-    answers : ["A"],
-  },
+  question: null,
 };
 
 const questionsSlice = createSlice({
   name: "questions",
   initialState,
   reducers: {
-    setQuestions: (state, action) => {
+    setQuestions(state, action: PayloadAction<Question[]>) {
       state.questions = action.payload;
     },
-    addQuestion: (state, action) => {
+    addQuestion(state, action: PayloadAction<Question>) {
       state.questions = [action.payload, ...state.questions];
     },
-    deleteQuestion: (state, action) => {
-      state.questions = state.questions.filter(
-        (question) => question._id !== action.payload
-      );
+    updateQuestion(state, action: PayloadAction<Question>) {
+      const index = state.questions.findIndex(q => q._id === action.payload._id);
+      if (index !== -1) {
+        state.questions[index] = action.payload; 
+      }
     },
-    updateQuestion: (state, action) => {
-      state.questions = state.questions.map((question) => {
-        if (question._id === action.payload._id) {
-          return action.payload;
-        } else {
-          return question;
-        }
-      });
+    deleteQuestion(state, action: PayloadAction<string>) {
+      state.questions = state.questions.filter(q => q._id !== action.payload);
     },
-    selectQuestion: (state, action) => {
+    selectQuestion(state, action: PayloadAction<Question>) {
       state.question = action.payload;
     },
   },
 });
 
-export const {
-  addQuestion,
-  deleteQuestion,
-  updateQuestion,
-  selectQuestion,
-  setQuestions,
-} = questionsSlice.actions;
+export const { addQuestion, deleteQuestion, updateQuestion, selectQuestion, setQuestions } = questionsSlice.actions;
 export default questionsSlice.reducer;
