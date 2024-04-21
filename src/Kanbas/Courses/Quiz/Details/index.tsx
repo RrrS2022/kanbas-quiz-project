@@ -13,6 +13,8 @@ export default function QuizDetails() {
       })
     const handleQuestion = (() => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/questions`);
+    }
+    )
 
     const handlePublish = () => {}
 
