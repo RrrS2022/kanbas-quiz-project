@@ -4,7 +4,6 @@ import { KanbasState } from "../../../store";
 import { FaBan, FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import { Link, useParams, useLocation, Route, Routes, useNavigate } from "react-router-dom";
 import QuizDetailsEditor from "./DetailsEditor";
-import QuestionEditor from "./QuestionsEditor";
 import * as quizClient from "../client"; 
 import { addQuiz, selectQuiz, updateQuiz } from "../quizzesReducer";
 

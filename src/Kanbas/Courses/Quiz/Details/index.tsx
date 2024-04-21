@@ -38,11 +38,11 @@ export default function QuizDetails() {
                     style={{ marginRight:"5px", borderRadius:"4px"}}>
                     <FaPencilAlt />Edit
                 </button>
-                <button className="btn btn-light"
+                {/* <button className="btn btn-light"
                     onClick={handleQuestion}
                     style={{ marginRight:"5px", borderRadius:"4px"}}>
                     <FaPencilAlt />Questions
-                </button>
+                </button> */}
                 <button className="btn btn-light"
                     style={{borderRadius:"4px"}}>
                     <FaEllipsisV />

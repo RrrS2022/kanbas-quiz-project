@@ -22,7 +22,7 @@ import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
 import QuizEditor from "./Quiz/QuizEditor";
 import QuizDetailsEditor from "./Quiz/QuizEditor/DetailsEditor";
-import QuestionEditor from "./Quiz/QuizEditor/QuestionsEditor";
+// import QuestionEditor from "./Quiz/QuizEditor/QuestionsEditor";
 import Preview from "./Quiz/Preview";
 
 function Courses() {
@@ -51,18 +51,6 @@ function Courses() {
 
   return (
     <div>
-      <div className="courseTitle">
-        <h4 className="menu">
-          <HiMiniBars3 />
-        </h4>
-        <h4>
-          {course?.number} {course?.name}{" "}
-          <span>
-            {"> "}
-            {formatPageTitle(currentPage)}
-          </span>
-        </h4>
-      </div>
       <div>
         <div className="courseTitle">
           <h4 className="menu"><HiMiniBars3 /></h4>
@@ -88,7 +76,7 @@ function Courses() {
                 <Route path="Quizzes/:quizId/Editor" element={<QuizEditor />} />
                 {/* <Route path="Quizzes/:quizId/Editor/" element={<QuizDetailsEditor />} /> */}
                 <Route path="Quizzes/:quizId/Editor/Details" element={<QuizDetailsEditor />} />
-                <Route path="Quizzes/:quizId/Editor/Questions" element={<QuestionEditor />} />
+                <Route path="Quizzes/:quizId/Editor/Questions" element={<QuizQuestions />} />
                 <Route path="Quizzes/:quizId/Preview" element={<Preview />} />
                 <Route path="Quizzes/:quizId/questions" element={<QuizQuestions />} />
                 <Route path="Assignments/:assignmentId" element={<AssignmentEditor />} />
