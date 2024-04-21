@@ -20,6 +20,10 @@ import axios from "axios";
 import Quiz from "./Quiz";
 import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
+import QuizEditor from "./Quiz/QuizEditor";
+import QuizDetailsEditor from "./Quiz/QuizEditor/DetailsEditor";
+import QuestionEditor from "./Quiz/QuizEditor/QuestionsEditor";
+import Preview from "./Quiz/Preview";
 
 function Courses() {
   const { courseId } = useParams();
@@ -60,31 +64,44 @@ function Courses() {
         </h4>
       </div>
 
-      <div className="row">
-        <div className="col-md-2">
-          <CourseNavigation />
-        </div>
-        <div className="col-md-8">
-          <div
-            className=" bottom-0 end-0"
-            style={{ left: "320px", top: "50px" }}
-          >
-            <Routes>
-              <Route path="/" element={<Navigate to="Home" />} />
-              <Route path="Home" element={<Home />} />
-              <Route path="Modules" element={<Modules />} />
-              <Route path="Piazza" element={<h1>Piazza</h1>} />
-              <Route path="Assignments" element={<Assignments />} />
-              <Route path="Quizzes" element={<Quiz />} />
-              <Route path="Quizzes/:quizId" element={<QuizDetails />} />
-              <Route path="Quizzes/:quizId/questions" element={<QuizQuestions />} />
-              <Route
-                path="Assignments/:assignmentId"
-                element={<AssignmentEditor />}
-              />
-              <Route path="Grades" element={<Grades />} />
-            </Routes>
-          </div>
+
+    return (
+        <div>
+            <div className="courseTitle">
+                <h4 className="menu"><HiMiniBars3 /></h4>
+                <h4>{course?.number} {course?.name} <span>{"> "}{formatPageTitle(currentPage)}</span></h4>
+            </div>
+
+            <div className="row">
+                <div className="col-md-2">
+                    <CourseNavigation />
+                </div>
+                <div className="col-md-8">
+                    <div
+                        className=" bottom-0 end-0"
+                        style={{ left: "320px", top: "50px" }} >
+                        <Routes>
+                            <Route path="/" element={<Navigate to="Home" />} />
+                            <Route path="Home" element={<Home />} />
+                            <Route path="Modules" element={<Modules />} />
+                            <Route path="Piazza" element={<h1>Piazza</h1>} />
+                            <Route path="Assignments" element={<Assignments />} />
+                            <Route path="Quizzes" element={<Quiz />} />
+                            <Route path="Quizzes/:quizId" element={<QuizDetails />} />
+                            <Route path="Quizzes/:quizId/Editor" element={<QuizEditor />} />
+                            {/* <Route path="Quizzes/:quizId/Editor/" element={<QuizDetailsEditor />} /> */}
+<!--                             <Route path="Quizzes/:quizId/Editor/Details" element={<QuizDetailsEditor />} />
+                            <Route path="Quizzes/:quizId/Editor/Questions" element={<QuestionEditor />} /> -->
+                            <Route path="Quizzes/:quizId/Preview" element={<Preview />} />
+                             <Route path="Quizzes/:quizId/questions" element={<QuizQuestions />} />
+                            
+                            <Route path="Assignments/:assignmentId" element={<AssignmentEditor />} />
+                            <Route path="Grades" element={<Grades />} />
+                        </Routes>
+                    </div>
+                </div>
+
+            </div>
         </div>
       </div>
     </div>
