@@ -25,6 +25,7 @@ function Assignments() {
   const handleAddClick = (() => {
     navigate(`/Kanbas/Courses/${courseId}/Assignments/newAssignment`);
   })
+  
   const handleDeleteAssignment = (assignmentId: string) => {
     client.deleteAssignment(assignmentId).then((status) => {
       dispatch(deleteAssignment(assignmentId));
