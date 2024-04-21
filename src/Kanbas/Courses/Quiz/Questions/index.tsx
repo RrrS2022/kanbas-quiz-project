@@ -9,6 +9,7 @@ import { KanbasState } from "../../../store";
 import {
     addQuestion, setQuestions, updateQuestion
 } from "./questionsReducer";
+import QuestionEditor from "./QuestionEditor";
 
 
 export default function QuizQuestions() {
@@ -112,6 +113,8 @@ export default function QuizQuestions() {
                     </tbody>
                 </table>
             </div>
+
+            <QuestionEditor />
 
 
 

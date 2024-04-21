@@ -1,0 +1,132 @@
+.quiz-question-editor {
+    width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .question-header,
+  .answers-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .question-title-input,
+  .question-type-select,
+  .question-points-input {
+    flex: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .points-label {
+    margin-right: 5px;
+  }
+  
+  .question-points-input {
+    flex: none;
+    width: 60px;
+  }
+  
+  .question-body {
+    margin-bottom: 15px;
+  }
+  
+  .question-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  .answer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .answer-label {
+    white-space: nowrap;
+    margin-right: 10px;
+  }
+  
+  .answer-textarea {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+  }
+  
+  .answer.correct-answer .answer-label {
+    color: rgb(7, 196, 7);
+  }
+  
+  .icons-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-icon,
+  .delete-icon {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .add-answer-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: white;
+    color: #f00c0c;
+    margin-left: auto;
+  }
+  
+  .question-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cancel-button,
+  .update-question-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background: #ccc;
+  }
+  
+  .update-question-button {
+    background: #f60000;
+    color: white;
+  }
+  
+  .answers-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    align-items: flex-start;
+  }
+  
+  .answer-options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .answer-radio {
+    margin-right: 5px;
+  }
+  
