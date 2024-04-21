@@ -9,7 +9,11 @@ import { KanbasState } from "../../../store";
 import {
     addQuestion, setQuestions, updateQuestion
 } from "./questionsReducer";
-import QuestionEditor from "./QuestionEditor";
+import MultipleChoices from "./MultipleChoice";
+import MultipleBlanks from "./MultipleBlanks";
+import TrueFalseQuestionEditor from "./TrueOrFalse";
+
+
 
 
 export default function QuizQuestions() {
@@ -17,12 +21,15 @@ export default function QuizQuestions() {
     const [selectQuestionId, setSelectQuestionId] = useState("");
     const questionList = useSelector((state: KanbasState) =>
         state.questionReducer.questions);
+    const [showEditor, setShowEditor] = useState(false);
+    const navigate = useNavigate();
+    const [questionType, setQuestionType] = useState('multiple-choice');
+    const dispatch = useDispatch();
     const question = useSelector((state: KanbasState) =>
         state.questionReducer.question);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-      interface Question {
+
+    interface Question {
         _id?: string;
         title: string;
         type: string;
@@ -30,8 +37,33 @@ export default function QuizQuestions() {
         question: string;
         options: string[];
         answers: string[];
-      }
-      
+    }
+
+    const handleShowEditor = () => {
+        setShowEditor(true);
+    };
+
+    const handleQuestionSave = () => {
+        setShowEditor(false);
+    };
+
+    const handleQuestionCancel = () => {
+        setShowEditor(false);
+    };
+
+    const renderQuestionEditor = () => {
+        switch (questionType) {
+            case 'multiple-choice':
+                return <MultipleChoices />;
+            case 'fill-in-the-bank':
+                return <MultipleBlanks />;
+            case 'true-false':
+                return <TrueFalseQuestionEditor />;
+            default:
+                return null;
+        }
+    };
+
 
 
     useEffect(() => {
@@ -114,15 +146,14 @@ export default function QuizQuestions() {
                 </table>
             </div>
 
-            <QuestionEditor />
-
-
 
             <div className="actions">
                 <div className="spacer"></div>
-                <button className="action-button" onClick={handleAddQuestion}>
-                    <IoMdAdd /> New Question
-                </button>
+                {!showEditor && (
+                    <button className="action-button" onClick={handleShowEditor}>
+                        <IoMdAdd /> New Question
+                    </button>
+                )}
                 <button className="action-button">
                     <IoMdAdd /> New Question Group
                 </button>
@@ -132,6 +163,39 @@ export default function QuizQuestions() {
                     Find Questions
                 </button>
             </div>
+
+            {showEditor && (
+                <div className="quiz-question-editor">
+                    <div className="question-header">
+                        <input
+                            type="text"
+                            placeholder="Question Title"
+                            className="question-title-input"
+                        />
+                        <select
+                            className="question-type-select"
+                            value={questionType}
+                            onChange={(e) => setQuestionType(e.target.value)}
+                        >
+                            <option value="multiple-choice">Multiple Choice</option>
+                            <option value="true-false">True/False</option>
+                            <option value="fill-in-the-bank">Fill In The Blank</option>
+                        </select>
+                        <label className="points-label">pts:</label>
+                        <input
+                            type="number"
+                            placeholder="1"
+                            className="question-points-input"
+                        />
+                    </div>
+                    <hr />
+                    {renderQuestionEditor()}
+                    <div className="question-footer">
+                        <button className="cancel-button" onClick={handleQuestionCancel}>Cancel</button>
+                        <button className="update-question-button" onClick={handleQuestionSave}>Update Question</button>
+                    </div>
+                </div>
+            )}
 
             <hr />
             <div className="footer">

@@ -27,7 +27,7 @@ const store = configureStore({
     modulesReducer,
     assignmentsReducer,
     quizzesReducer,
-    questionReducer
+    questionReducer,
   }
 });
 

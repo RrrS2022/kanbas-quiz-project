@@ -3,7 +3,7 @@ import { IoIosAdd } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./index.css";
 
-export default function MultipleBlanks() {
+  const MultipleBlanks = () => {
   return (
     <div className="quiz-question-editor">
       <hr />
@@ -44,10 +44,9 @@ export default function MultipleBlanks() {
         </button>
       </div>
 
-      <div className="question-footer">
-        <button className="cancel-button">Cancel</button>
-        <button className="update-question-button">Update Question</button>
-      </div>
+
     </div>
   );
 }
+
+export default MultipleBlanks;

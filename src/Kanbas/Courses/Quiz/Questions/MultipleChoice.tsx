@@ -2,8 +2,8 @@ import React from "react";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "./index.css";
-
-export default function MultipleChoices() {
+  
+  const MultipleChoice  = () => {
   return (
     <div className="quiz-question-editor">
       <hr />
@@ -43,11 +43,7 @@ export default function MultipleChoices() {
           <IoIosAdd /> Add Another Answer
         </button>
       </div>
-
-      <div className="question-footer">
-        <button className="cancel-button">Cancel</button>
-        <button className="update-question-button">Update Question</button>
-      </div>
     </div>
   );
 }
+export default MultipleChoice;
