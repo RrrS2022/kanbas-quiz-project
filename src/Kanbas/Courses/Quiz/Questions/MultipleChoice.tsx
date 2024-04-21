@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoIosAdd } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
+import { MdDelete, MdEdit } from "react-icons/md";
 import "./index.css";
 
 export default function MultipleChoices() {
@@ -18,8 +17,7 @@ export default function MultipleChoices() {
           <option value="true-false">True/False</option>
           <option value="fill-in-the-bank">Fill In The Blank</option>
         </select>
-        <div className="points-container"></div>
-        <span>pts: </span>
+        <label className="points-label">pts:</label>
         <input
           type="number"
           placeholder="1"
@@ -28,7 +26,7 @@ export default function MultipleChoices() {
       </div>
       <hr />
       <div className="question-body">
-        Question:
+        <label className="question-label">Question:</label>
         <textarea
           placeholder="Enter your question"
           className="question-textarea"
@@ -36,28 +34,37 @@ export default function MultipleChoices() {
       </div>
 
       <div className="answers-section">
-        <label>Answers:</label>
-        <div className="choice">
-          <input
-            type="radio"
-            name="correct-answer"
-            className="correct-answer-radio"
-          />
+        <div className="answer correct-answer">
+          <label className="answer-label">Correct Answer</label>
           <textarea
             placeholder="Answer text"
-            className="choice-textarea"
+            className="answer-textarea"
           ></textarea>
-
           <div className="icons-container">
-            <FaRegEdit className="edit-icon" />
+            <MdEdit className="edit-icon" />
             <MdDelete className="delete-icon" />
           </div>
         </div>
+
+        <div className="answer possible-answer">
+          <label className="answer-label">Possible Answer</label>
+          <textarea
+            placeholder="Answer text"
+            className="answer-textarea"
+          ></textarea>
+          <div className="icons-container">
+            <MdEdit className="edit-icon" />
+            <MdDelete className="delete-icon" />
+          </div>
+        </div>
+        <button className="add-answer-button">
+          <IoIosAdd /> Add Another Answer
+        </button>
       </div>
 
       <div className="question-footer">
         <button className="cancel-button">Cancel</button>
-        <button className="save-update-button">Update Question</button>
+        <button className="update-question-button">Update Question</button>
       </div>
     </div>
   );

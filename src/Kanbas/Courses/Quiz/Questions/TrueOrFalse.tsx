@@ -11,9 +11,13 @@ export default function TrueFalseQuestionEditor() {
           className="question-title-input"
         />
         <select className="question-type-select">
-          <option value="true-false">True/False</option>
+          <option value="multiple-choice">Multiple Choice</option>
+          <option value="true-false" selected>
+            True/False
+          </option>
+          <option value="fill-in-the-bank">Fill In The Blank</option>
         </select>
-        <span className="points-label">pts</span>
+        <label className="points-label">pts:</label>
         <input
           type="number"
           placeholder="1"
@@ -22,40 +26,41 @@ export default function TrueFalseQuestionEditor() {
       </div>
       <hr />
       <div className="question-body">
-        <label>Question:</label>
+        <label className="question-label">Question:</label>
         <textarea
-          placeholder="Enter your question text"
+          placeholder="Enter your question"
           className="question-textarea"
         ></textarea>
       </div>
 
       <div className="answers-section">
-        <label>Answers:</label>
-        <br />
-        <label className="answer-option">
-          <input
-            type="radio"
-            name="correct-answer"
-            value="true"
-            className="true-false-radio"
-          />
-          True
-        </label>
-        <br />
-        <label className="answer-option">
-          <input
-            type="radio"
-            name="correct-answer"
-            value="false"
-            className="true-false-radio"
-          />
-          False
-        </label>
+        <label className="answers-label">Answers:</label>
+        <div className="answer-options">
+          <label className="answer-option">
+            <input
+              type="radio"
+              name="correct-answer"
+              value="true"
+              className="answer-radio"
+            />
+            True
+          </label>
+
+          <label className="answer-option">
+            <input
+              type="radio"
+              name="wrong-answer"
+              value="false"
+              className="answer-radio"
+            />
+            False
+          </label>
+        </div>
       </div>
 
       <div className="question-footer">
         <button className="cancel-button">Cancel</button>
-        <button className="save-update-button">Update Question</button>
+        <button className="update-question-button">Update Question</button>
       </div>
     </div>
   );

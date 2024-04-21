@@ -23,6 +23,7 @@ import QuizQuestions from "./Quiz/Questions";
 import QuizQuestionsEditor from "./Quiz/Questions/QuestionsEditor";
 import MultipleChoices from "./Quiz/Questions/MultipleChoice";
 import TrueOrFalse from "./Quiz/Questions/TrueOrFalse";
+import MultipleBlanks from "./Quiz/Questions/MultipleBlanks";
 
 function Courses() {
   const { courseId } = useParams();
@@ -92,6 +93,10 @@ function Courses() {
               <Route
                 path="Quiz/:quizId/question/truefalse"
                 element={<TrueOrFalse />}
+              />
+              <Route
+                path="Quiz/:quizId/question/multipleblanks"
+                element={<MultipleBlanks />}
               />
 
               <Route
