@@ -231,7 +231,7 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({ question, setQuestion }
                 question.options.map((blank, index) => (
                     <div key={index} className="answer possible-answer">
                         <label className="answer-label">Possible Answer</label>
-                        
+
                         <textarea
                             value={blank}
                             onChange={(e) => handleBlankChange(index, e.target.value)}
@@ -280,8 +280,11 @@ export default function QuizQuestions() {
 
     const handleQuestionSave = async () => {
         if (currentQuestion._id && quizId) {
+            // console.log(currentQuestion._id)
+            // console.log(quizId)
+            // console.log(currentQuestion)
             await client.updateQuestion(quizId, currentQuestion._id, currentQuestion)
-            dispatch(updateQuestion(currentQuestion ));
+            dispatch(updateQuestion(currentQuestion));
         } else {
             if (quizId) {
                 const added = await client.createQuestion(quizId, currentQuestion);
@@ -318,7 +321,7 @@ export default function QuizQuestions() {
         console.log(question.questionType)
         setShowEditor(true);
     };
-    
+
 
 
     const handleAddQuestion = () => {
@@ -347,7 +350,6 @@ export default function QuizQuestions() {
         <div className="quiz-container">
             <div className="header">
                 <div className="spacer"></div>
-
                 <span className="points">Points 0</span>
                 <span className="status">Not Published</span>
                 <button className="menu">
@@ -366,6 +368,7 @@ export default function QuizQuestions() {
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Title</th>
                             <th scope="col">Points</th>
                             <th scope="col">Question</th>
@@ -379,6 +382,7 @@ export default function QuizQuestions() {
                         {questionList.filter(question => question.quiz === quizId).map((question, index) => (
                             <tr key={question._id}>
                                 <th scope="row">{index + 1}</th>
+                                <td>{question._id}</td>
                                 <td>{question.title}</td>
                                 <td>{question.points}</td>
                                 <td>{question.question}</td>
@@ -459,7 +463,7 @@ export default function QuizQuestions() {
                 <div className="footer-buttons">
                     <button className="cancel-button">Cancel</button>
                     <button className="save-publish-button">Save & Publish</button>
-                    <button className="btn btn-danger">Save</button>
+                    <button className="btn">Save</button>
                 </div>
             </div>
         </div>
