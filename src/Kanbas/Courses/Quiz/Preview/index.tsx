@@ -8,12 +8,12 @@ import "../../Assignments/index.css"
 export default function Preview () {
     const quiz = useSelector((state: KanbasState) => 
         state.quizzesReducer.quiz);
+    const questionItem = useSelector((state: KanbasState) =>
+        state.questionReducer.question);
     return (
         <div>
             <h1>Quiz Preview Screen</h1>
             <h2>{quiz.title}</h2>
-            {/* this is a placeholder for quiz title */}
-            <h2>Quiz Title</h2>
             <div style={{color:"#BC3518", backgroundColor: "#F6CEC5", height: "35px",
                 display: "flex", alignItems: "center", }}>
                 <p style={{marginTop: "15px"}}>
@@ -34,11 +34,13 @@ export default function Preview () {
                     <b> Question 1 </b> {/* placeholder for actual question number */}
                     <p style={{ float: "right", margin: 0 }}> 1 pts </p>
                 </div>
-                <div className="" style={{margin:0, padding: 10}}>
+                <div style={{margin:0, padding: 10}}>
                     {/** This is the placeholder for the actual question display */}
-                An HTML label element can be associated with an HTML input element by setting their id attributes to the same value.
+                    An HTML label element can be associated with an HTML input element by setting their id 
+                    attributes to the same value. The resulting effect is that when you click on the label 
+                    text, the input element receives focus as if you had click on the input element itself
+                    {questionItem && <div>{questionItem.question}</div>}
 
-                The resulting effect is that when you click on the label text, the input element receives focus as if you had click on the input element itself
                     <hr />
                     <div style={{padding:0}}>
                         <input  type="radio" 
