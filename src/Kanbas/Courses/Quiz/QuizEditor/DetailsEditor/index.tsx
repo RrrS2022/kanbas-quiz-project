@@ -24,7 +24,7 @@ export default function QuizDetailsEditor () {
         <div className="container-fluid">
         
 
-        <h2>Quiz Name</h2>
+        <h2>{quiz.title}</h2>
         <input value={quiz.title}
             type="text"
             className="form-control mb-2" 
