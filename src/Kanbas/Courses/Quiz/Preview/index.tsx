@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
-import { FiAlertCircle, FiArrowRight } from "react-icons/fi";
+import { FiAlertCircle, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 import { MdOutlineEdit } from "react-icons/md";
 import "../../Assignments/index.css";
 import { setQuestions } from "../Questions/questionsReducer";
@@ -11,10 +11,11 @@ import { findAllQuestionsForQuiz } from "../Questions/client";
 export default function Preview() {
     const { quizId } = useParams();
     const dispatch = useDispatch();
-    const quiz = useSelector((state: KanbasState) => 
+    const quiz = useSelector((state: KanbasState) =>
         state.quizzesReducer.quiz);
     const questions = useSelector((state: KanbasState) =>
-        state.questionReducer.questions); // This should be 'questions', not 'question'
+        state.questionReducer.questions);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
     useEffect(() => {
         if (quizId) {
@@ -27,6 +28,20 @@ export default function Preview() {
                 });
         }
     }, [quizId, dispatch]);
+
+    const handleNextQuestion = () => {
+        if (currentQuestionIndex < questions.length - 1) {
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        }
+    };
+
+    const handlePreviousQuestion = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
+        }
+    };
+
+    const currentQuestion = questions[currentQuestionIndex];
 
     return (
         <div>
@@ -41,27 +56,23 @@ export default function Preview() {
                 </p>
             </div>
             <br />
-            <div>
-                <p>Started: time</p> {/* Placeholder for actual time */}
-            </div>
-            <h1>Quiz Instructions</h1>
-            <hr />
-            {questions.map((question, index) => (
-                <div key={question._id} className="container" style={{ border: "1px solid #ccc", margin: 0, padding: 0 }}>
-                    <div style={{
-                        display: "flex", justifyContent: "space-between", alignItems: "center",
-                        backgroundColor: "lightgrey", margin: 0, padding: 10
-                    }}>
-                        <b> Question {index + 1} </b>
-                        <p style={{ float: "right", margin: 0 }}> {question.points} pts </p>
+            {currentQuestion && (
+                <div className="container" style={{ border: "1px solid #ccc", margin: 0, padding: 0 }}>
+                    <div
+                        style={{
+                            display: "flex", justifyContent: "space-between", alignItems: "center",
+                            backgroundColor: "lightgrey", margin: 0, padding: 10
+                        }}>
+                        <b> Question {currentQuestionIndex + 1} </b>
+                        <p style={{ float: "right", margin: 0 }}> {currentQuestion.points} pts </p>
                     </div>
                     <div style={{ margin: 0, padding: 10 }}>
-                        {question.question}
+                        {currentQuestion.question}
                         <hr />
                         <div style={{ padding: 0 }}>
-                            {question.options.map((option: any, idx: any) => (
+                            {currentQuestion.options.map((option: any, idx:any) => (
                                 <React.Fragment key={idx}>
-                                    <input type="radio" name={`question_${index}`} value={option} />
+                                    <input type="radio" name={`question_${currentQuestionIndex}`} value={option} />
                                     &#160; {option}
                                     <hr />
                                 </React.Fragment>
@@ -69,23 +80,14 @@ export default function Preview() {
                         </div>
                     </div>
                 </div>
-            ))}
-            <div style={{ padding: 0 }}>
-                <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-                    <button className="btn btn-light" style={{ float: "right", margin: "20px", border: "solid #ccc" }}>
-                        Next <FiArrowRight />
-                    </button>
-                </div>
-                <div className="form-group d-flex" style={{ border: "1px solid #ccc", height: "60px", display: "flex", alignItems: "center" }}>
-                    <div style={{ flex: 1 }}></div>
-                    <p style={{ marginTop: "15px", color: "grey" }}> Quiz saved at time </p>
-                    <button className="btn btn-light" style={{
-                        height: "40px", float: "right", border: "solid #ccc",
-                        marginRight: "10px", marginLeft: "10px"
-                    }}>
-                        Submit Quiz
-                    </button>
-                </div>
+            )}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
+                <button className="btn btn-light" onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
+                    <FiArrowLeft /> Previous
+                </button>
+                <button className="btn btn-light" onClick={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1}>
+                    Next <FiArrowRight />
+                </button>
             </div>
         </div>
     );
