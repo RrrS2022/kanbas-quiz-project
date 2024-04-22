@@ -371,20 +371,6 @@ export default function QuizQuestions() {
 
     return (
         <div className="quiz-container">
-            <div className="header">
-                <div className="spacer"></div>
-                <span className="points">Points 0</span>
-                <span className="status">Not Published</span>
-                <button className="menu">
-                    <IoMdMore />
-                </button>
-            </div>
-            <hr />
-            <div className="tabs">
-                <button className="tab">Details</button>
-                <button className="tab active">Questions</button>
-            </div>
-
             {/* Question List */}
             <div>
                 <table className="table">

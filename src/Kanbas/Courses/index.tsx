@@ -22,7 +22,6 @@ import QuizDetails from "./Quiz/Details";
 import QuizQuestions from "./Quiz/Questions";
 import QuizEditor from "./Quiz/QuizEditor";
 import QuizDetailsEditor from "./Quiz/QuizEditor/DetailsEditor";
-// import QuestionEditor from "./Quiz/QuizEditor/QuestionsEditor";
 import Preview from "./Quiz/Preview";
 
 function Courses() {
