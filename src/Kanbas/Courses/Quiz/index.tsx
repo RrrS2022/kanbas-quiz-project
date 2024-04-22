@@ -22,8 +22,8 @@ function Quiz() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(quiz)
-  console.log(quizList)
+  // console.log(quiz)
+  // console.log(quizList)
 
   const getAvailabilityStatus = (quiz: any) => {
     const currentDate = new Date();
@@ -44,13 +44,13 @@ function Quiz() {
     if (typeof courseId === 'string') {
       client.createQuiz(courseId, quiz).then((quiz) => {
       dispatch(addQuiz(quiz));
-      
+
       navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`);
       });
     } else {
       console.error('courseId is undefined');
     }
-   
+
   });
 
   const handleDeleteQuiz = (quizId: string) => {
@@ -73,7 +73,7 @@ function Quiz() {
       });
   };
 
-  
+
   useEffect(() => {
     if (courseId !== undefined) {
       client.findQuizzesForCourse(courseId)
@@ -117,9 +117,9 @@ function Quiz() {
     setSelectQuizId("");
   };
 
-  console.log(quizList)
+  // console.log(quizList)
 
-  
+
 
   return (
 
@@ -163,7 +163,7 @@ function Quiz() {
                   | Due date: {new Date(quiz.dueDate).toLocaleDateString()} at {new Date(quiz.dueDate).toLocaleTimeString()} {" "}
                 </span>
                 <span className="mb-0">
-                  {quiz.points} pts 
+                  {quiz.points} pts
                 </span>
                 <span className="mb-0">
                   | {quiz.questionNumber} Questions
