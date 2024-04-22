@@ -11,9 +11,9 @@ import {
 } from "./questionsReducer";
 import { IoIosAdd } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
-import "./index.css";
-import { updateAssignment } from "../../Assignments/client";
-
+import "./index.css"; 
+import * as quizClient from "../client";
+import { updateQuiz } from "../quizzesReducer";
 
 interface Question {
     _id?: string;
@@ -277,6 +277,29 @@ export default function QuizQuestions() {
     const [currentQuestion, setCurrentQuestion] = useState(question);
 
 
+    // Update quiz without publishing
+    const handleSave = async () => {
+        try {
+            const updatedQuiz = await quizClient.updateQuiz(quizId);
+            dispatch(updateQuiz(updatedQuiz));
+            navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`);
+        } catch (error) {
+            console.error('Failed to save the quiz:', error);
+        }
+    };
+
+    // Update quiz and publish it
+    const handleSaveAndPublish = async () => {
+        try {
+            const updatedQuiz = await quizClient.updateQuiz(quizId);
+            dispatch(updateQuiz(updatedQuiz));
+            navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`);
+        } catch (error) {
+            console.error('Failed to save and publish the quiz:', error);
+        }
+    };
+
+
 
     const handleQuestionSave = async () => {
         if (currentQuestion._id && quizId) {
@@ -466,8 +489,15 @@ export default function QuizQuestions() {
                         style={{ marginRight: "5px" }}>
                         Cancel
                     </Link>
-                    <button className="save-publish-button">Save & Publish</button>
-                    <button className="btn">Save</button>
+                        <button className="btn btn-light"
+                            style={{marginRight:"5px"}}
+                            onClick={handleSaveAndPublish}>
+                            Save&Publish
+                        </button>
+                        <button className="btn btn-danger"
+                            onClick={handleSave}>
+                            Save
+                        </button>
                 </div>
             </div>
         </div>
