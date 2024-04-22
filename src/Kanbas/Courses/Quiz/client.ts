@@ -32,7 +32,7 @@ export const findQuizzesForCourse = async (course: string) => {
     return response.data;
   };
 
-export const findQuiz = async (quizId: any) => {
+export const findQuizById = async (quizId: any) => {
   const response = await axios.get(`${QUIZZES_API}/${quizId}`);
   return response.data
 }

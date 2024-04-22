@@ -9,9 +9,11 @@ import { updateQuiz } from "../quizzesReducer";
 
 export default function QuizDetails() {
     const { courseId, quizId } = useParams();
+    console.log("this is the detial quizId",quizId)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
+    console.log("this is the current quiz", quiz)
     const togglePublishStatus = (quizId: string, isCurrentlyPublished: boolean) => {
         const changes = { published: !isCurrentlyPublished };
         quizClient.updateQuiz({ _id: quizId, ...changes })
@@ -41,11 +43,15 @@ export default function QuizDetails() {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
     };
 
+    console.log("find quiz", quizClient.findQuizById(quizId))
+
     useEffect(() => {
-        quizClient.findQuiz(quizId).then((quiz) => {
+        quizClient.findQuizById(quizId).then((quiz) => {
             dispatch(selectQuiz(quiz));
         });
     }, [quizId]);
+
+
     
 
     return(

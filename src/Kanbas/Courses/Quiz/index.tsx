@@ -70,8 +70,7 @@ function Quiz() {
       });
   };
 
-
-
+  
   useEffect(() => {
     if (courseId !== undefined) {
       client.findQuizzesForCourse(courseId)
@@ -114,8 +113,10 @@ function Quiz() {
     setIsDialogOpen(false);
     setSelectQuizId("");
   };
-  
 
+  console.log(quizList)
+
+  
 
   return (
 
