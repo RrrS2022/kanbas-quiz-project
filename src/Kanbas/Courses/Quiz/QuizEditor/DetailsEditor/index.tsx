@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../../store";
 import { selectQuiz, setQuiz } from "../../quizzesReducer";
+import { useParams } from "react-router";
 
 export default function QuizDetailsEditor () {
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
     const dispatch = useDispatch();
-
+    const quizId = useParams();
     const handleChange = (e: any) => {
         const { name, value, checked, type } = e.target;
         dispatch(selectQuiz({
@@ -14,6 +15,10 @@ export default function QuizDetailsEditor () {
             [name]: type === 'checkbox' ? checked : value
         }));
     };
+
+    useEffect(() => {
+        setQuiz(quiz);
+    }, [quiz]);
 
     return (
         <div className="container-fluid">
@@ -54,9 +59,9 @@ export default function QuizDetailsEditor () {
                     style={{ width: "400px", marginLeft: "20px" }}
                     onChange={(e) => dispatch(selectQuiz({ ...quiz, type: e.target.value }))}>
                     <option selected>Graded Quiz</option>
-                    <option value="quiz">Practice Quiz</option>
-                    <option value="exam">Graded Survey</option>
-                    <option value="project">Ungraded Survey</option>
+                    <option value="Practice Quiz">Practice Quiz</option>
+                    <option value="Graded Surey">Graded Survey</option>
+                    <option value="Ungradeed Survey">Ungraded Survey</option>
                 </select>
             </div>
             <div className="mb-3 row justify-content-center">

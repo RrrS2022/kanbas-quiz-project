@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCheckCircle, FaPencilAlt, FaEllipsisV} from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { KanbasState } from "../../../store";
+import * as quizClient from "../client"
+import { selectQuiz } from "../quizzesReducer";
 
 export default function QuizDetails() {
     const { courseId, quizId } = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz)
     const handleEdit = (() => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Editor`);
@@ -21,7 +24,14 @@ export default function QuizDetails() {
     // fill in the path to preview page
     const handlePreview = () => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
-    }
+    };
+
+    useEffect(() => {
+        quizClient.findQuiz(quizId).then((quiz) => {
+            dispatch(selectQuiz(quiz));
+        });
+    }, [quizId]);
+    
 
     return(
         <div className="flex-fill ms-5 ,me-5">

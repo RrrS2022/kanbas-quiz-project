@@ -31,4 +31,9 @@ export const findQuizzesForCourse = async (course: string) => {
       .get(`${COURSES_API}/${course}/quizzes`);
     return response.data;
   };
+
+export const findQuiz = async (quizId: any) => {
+  const response = await axios.get(`${QUIZZES_API}/${quizId}`);
+  return response.data
+}
   
