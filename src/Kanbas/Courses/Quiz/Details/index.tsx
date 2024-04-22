@@ -46,14 +46,19 @@ export default function QuizDetails() {
     console.log("find quiz", quizClient.findQuizById(quizId))
 
     useEffect(() => {
-        quizClient.findQuizById(quizId).then((quiz) => {
+        const fetchQuiz = async () => {
+          try {
+            const quiz = await quizClient.findQuizById(quizId);
             dispatch(selectQuiz(quiz));
-        });
-    }, [quizId]);
-
-
-    
-
+          } catch (error) {
+            console.error('Error fetching quiz:', error);
+            // Optionally handle the error here, e.g., show an error message
+          }
+        };
+      
+        fetchQuiz();
+      }, [quizId, dispatch]);
+      
     return(
         <div className="flex-fill ms-5 ,me-5">
             <div className="d-flex justify-content-end">
