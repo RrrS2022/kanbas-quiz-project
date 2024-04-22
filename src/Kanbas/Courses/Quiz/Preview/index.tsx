@@ -28,7 +28,7 @@ export default function Preview () {
             <h1>Quiz Instructions</h1>
             <hr />
             <div className="container" style={{border: "1px solid #ccc", margin: 0, padding: 0}}>
-                <div className=""
+                <div 
                     style={{ display: "flex", justifyContent: "space-between", alignItems: "center", 
                     backgroundColor: "lightgrey", margin: 0, padding: 10}}>
                     <b> Question 1 </b> {/* placeholder for actual question number */}
@@ -41,19 +41,19 @@ export default function Preview () {
                 The resulting effect is that when you click on the label text, the input element receives focus as if you had click on the input element itself
                     <hr />
                     <div style={{padding:0}}>
-                        <input className="form-check-input" type="radio" 
+                        <input  type="radio" 
                                 />
                         &#160;possible choice1<hr /> 
-                        <input className="form-check-input" type="radio" 
+                        <input type="radio" 
                                 />
                         &#160;possible choice2<hr />
-                        <input className="form-check-input" type="radio" 
+                        <input type="radio" 
                                 />
                         &#160;possible choice3<hr />
-                        <input className="form-check-input" type="radio" 
+                        <input type="radio" 
                                 />
                         &#160;possible choice4<hr />
-                        <input className="form-check-input" type="radio" 
+                        <input type="radio" 
                                 />
                         &#160;possible choice5<br />
                     </div>    
