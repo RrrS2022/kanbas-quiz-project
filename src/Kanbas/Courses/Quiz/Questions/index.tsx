@@ -263,7 +263,7 @@ export default function QuizQuestions() {
         answers: [],
     };
 
-    const { quizId } = useParams();
+    const { courseId, quizId } = useParams();
     const [selectQuestionId, setSelectQuestionId] = useState("");
     const questionList = useSelector((state: KanbasState) =>
         state.questionReducer.questions);
@@ -461,7 +461,11 @@ export default function QuizQuestions() {
                     <span>Notify users this quiz has changed</span>
                 </label>
                 <div className="footer-buttons">
-                    <button className="cancel-button">Cancel</button>
+                    <Link to={`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`}
+                        className="btn btn-light"
+                        style={{ marginRight: "5px" }}>
+                        Cancel
+                    </Link>
                     <button className="save-publish-button">Save & Publish</button>
                     <button className="btn">Save</button>
                 </div>
