@@ -22,6 +22,9 @@ function Quiz() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  console.log(quiz)
+  console.log(quizList)
+
   const getAvailabilityStatus = (quiz: any) => {
     const currentDate = new Date();
     const availableFrom = new Date(quiz.availableFromDate);
@@ -146,7 +149,7 @@ function Quiz() {
 
 
       {/* Table content - quiz list  */}
-      {quizList.filter((quiz) => quiz.course === courseId).map((quiz, index) => (
+      {quizList.filter((quiz) => quiz.courseId === courseId).map((quiz, index) => (
         <div key={quiz._id} className="list-group-item list-group-item-action">
           <div className="d-flex justify-content-between align-items-center">
             <Link style={{ color: 'inherit', textDecoration: 'none' }} className="d-flex align-items-center" to={`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`}>
@@ -154,13 +157,13 @@ function Quiz() {
               <div>
                 <h5 className="mb-1 text-dark">{quiz.title}</h5>
                 <span className="mb-0">
-                  {getAvailabilityStatus(quiz)} {" "}
+                  {getAvailabilityStatus(quiz)}
                 </span>
                 <span className="mb-0">
                   | Due date: {new Date(quiz.dueDate).toLocaleDateString()} at {new Date(quiz.dueDate).toLocaleTimeString()} {" "}
                 </span>
                 <span className="mb-0">
-                  {quiz.points} pts {" "}
+                  {quiz.points} pts 
                 </span>
                 <span className="mb-0">
                   | {quiz.questionNumber} Questions
