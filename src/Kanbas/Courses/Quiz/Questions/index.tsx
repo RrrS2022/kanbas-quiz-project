@@ -464,7 +464,7 @@ export default function QuizQuestions() {
             )}
 
             <hr />
-            <div className="footer">
+            {/* <div className="footer">
                 <label className="notify-label">
                     <input type="checkbox" id="notify" />
                     <span>Notify users this quiz has changed</span>
@@ -485,7 +485,7 @@ export default function QuizQuestions() {
                             Save
                         </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
