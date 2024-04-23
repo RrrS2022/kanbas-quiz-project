@@ -33,17 +33,27 @@ export default function QuizEditor() {
     const handleSaveAndPublish = async () => {
         if (typeof courseId === 'string') {
             if (quizId) {
-                const status = await quizClient.updateQuiz(quiz);
-                dispatch(updateQuiz(quiz));
+                if (!quiz.published) {
+                    // If quiz is not published, then publish it
+                    const updatedQuiz = { ...quiz, published: true };
+                    const status = await quizClient.updateQuiz(updatedQuiz);
+                    dispatch(updateQuiz(updatedQuiz));
+                } else {
+                    console.log('Quiz is already published');
+                    const status = await quizClient.updateQuiz(quiz);
+                    dispatch(updateQuiz(quiz));
+                }
+                
             } else {
                 const newQuiz = await quizClient.createQuiz(courseId, quiz);
                 dispatch(addQuiz(newQuiz));
             }
             navigate(`/Kanbas/Courses/${courseId}/Quizzes/`);
         } else {
-            console.error("error");
+            console.error('courseId is undefined');
         }
     };
+    
 
     // const handleSaveAndPublish = () => {
     //     if (typeof courseId === 'string') {
