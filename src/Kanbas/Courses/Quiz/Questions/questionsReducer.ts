@@ -7,7 +7,7 @@ interface Question {
   points: number;
   question: string;
   options: string[];
-  answers: string;
+  answers: string[];
 }
 
 interface QuestionsState {
