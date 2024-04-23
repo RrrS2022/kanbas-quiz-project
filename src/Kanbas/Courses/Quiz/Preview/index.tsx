@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
 import { FiAlertCircle, FiArrowRight, FiArrowLeft } from "react-icons/fi";
@@ -9,7 +9,8 @@ import { setQuestions } from "../Questions/questionsReducer";
 import { findAllQuestionsForQuiz } from "../Questions/client";
 
 export default function Preview() {
-    const { quizId } = useParams();
+    const { courseId, quizId } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const quiz = useSelector((state: KanbasState) =>
         state.quizzesReducer.quiz);
@@ -40,6 +41,10 @@ export default function Preview() {
             setCurrentQuestionIndex(currentQuestionIndex - 1);
         }
     };
+
+    const handleSubmit = () => {
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`)
+    }
 
     const currentQuestion = questions[currentQuestionIndex];
 
@@ -96,15 +101,38 @@ export default function Preview() {
                             )}
                         </div>
                     </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
+                        <button className="btn btn-light" onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
+                            <FiArrowLeft /> Previous
+                        </button>
+                        <button className="btn btn-light" onClick={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1}>
+                            Next <FiArrowRight />
+                        </button>
+                    </div>
                 </div>
+
             )}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "20px" }}>
-                <button className="btn btn-light" onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0}>
-                    <FiArrowLeft /> Previous
+
+            <div className="form-group d-flex"
+                style={{ border: "1px solid #ccc", height: "60px", display: "flex", alignItems: "center" }}>
+                <div style={{ flex: 1 }}></div>
+                <p style={{ marginTop: "15px", color: "grey" }}> Quiz saved at time </p>
+                <button className="btn btn-light"
+                    style={{
+                        height: "40px", float: "right", border: "solid #ccc",
+                        marginRight: "10px", marginLeft: "10px"
+                    }}
+                    onClick={handleSubmit}>
+                    Submit Quiz
                 </button>
-                <button className="btn btn-light" onClick={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1}>
-                    Next <FiArrowRight />
-                </button>
+            </div>
+            <div className="form-group d-flex"
+                style={{
+                    border: "1px solid #ccc", height: "30px",
+                    backgroundColor: "lightgray", display: "flex", alignItems: "center",
+                    margin: "20px", padding: 0
+                }}>
+                <MdOutlineEdit />&#160; Keep Editing This Quiz
             </div>
         </div>
     );
