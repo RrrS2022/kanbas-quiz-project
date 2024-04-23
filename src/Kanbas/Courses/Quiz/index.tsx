@@ -38,8 +38,17 @@ function Quiz() {
 
 
   const handleAddClick = (() => {
-    navigate(`/Kanbas/Courses/${courseId}/Quizzes/newQuiz`);
-  })
+    if (typeof courseId === 'string') {
+      client.createQuiz(courseId, quiz).then((quiz) => {
+      dispatch(addQuiz(quiz));
+      
+      navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`);
+      });
+    } else {
+      console.error('courseId is undefined');
+    }
+   
+  });
 
   const handleDeleteQuiz = (quizId: string) => {
     client.deleteQuiz(quizId).then((status) => {

@@ -71,6 +71,10 @@ const quizzesSlice = createSlice({
     setQuiz: (state, action) => {
       state.quizzes = action.payload;
     },
+    // setQuiz: (state, action) => {
+    //   state.quiz = action.payload;
+    // },
+    
 
   },
 });

@@ -1,13 +1,31 @@
-import React from "react";
-import { FaCheckCircle, FaPencilAlt, FaEllipsisV} from "react-icons/fa";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { FaCheckCircle, FaPencilAlt, FaEllipsisV, FaBan} from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { KanbasState } from "../../../store";
+import * as quizClient from "../client"
+import { selectQuiz } from "../quizzesReducer";
+import { updateQuiz } from "../quizzesReducer";
 
 export default function QuizDetails() {
     const { courseId, quizId } = useParams();
     const navigate = useNavigate();
-    const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz)
+    const dispatch = useDispatch();
+    const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
+    const togglePublishStatus = (quizId: string, isCurrentlyPublished: boolean) => {
+        const changes = { published: !isCurrentlyPublished };
+        quizClient.updateQuiz({ _id: quizId, ...changes })
+          .then(updatedQuiz => {
+            dispatch(updateQuiz({
+              _id: quizId,
+              changes: updatedQuiz
+            }));
+          })
+          .catch(error => {
+            console.error('Error updating quiz:', error);
+          });
+      };
+
     const handleEdit = (() => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Editor`);
       })
@@ -21,12 +39,42 @@ export default function QuizDetails() {
     // fill in the path to preview page
     const handlePreview = () => {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
-    }
+    };
+
+    useEffect(() => {
+        quizClient.findQuiz(quizId).then((quiz) => {
+            dispatch(selectQuiz(quiz));
+        });
+    }, [quizId]);
+    
 
     return(
         <div className="flex-fill ms-5 ,me-5">
             <div className="d-flex justify-content-end">
-                <span style={{ color: 'green' }}><FaCheckCircle />Published</span>
+                {/* <button
+                    className="btn btn-light"
+                    onClick={() => togglePublishStatus(quiz._id, quiz.published)}
+                    >
+                    {quiz.published ? (
+                            <p style={{ color: "green" }}><FaCheckCircle /> published</p>
+                        ) : (<p style={{ color: "grey" }}><FaBan />Not Published</p>)}
+                </button> */}
+                <button
+                    className="btn btn-light"
+                    onClick={() => togglePublishStatus(quiz._id, quiz.published)}
+                    >
+                    {quiz.published ? (
+                        <p style={{ color: "green" }}>
+                        <FaCheckCircle /> published
+                        </p>
+                    ) : (
+                        <p style={{ color: "grey" }}>
+                        <FaBan /> Not Published
+                        </p>
+                    )}
+                </button>
+
+
                 <button 
                     className="btn btn-light"
                     style={{marginLeft:"5px", marginRight:"10px", borderRadius:"4px"}}
