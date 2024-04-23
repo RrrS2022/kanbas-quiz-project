@@ -10,6 +10,8 @@ import {
 import { KanbasState } from "../../store";
 import * as client from "./client";
 import { IoRocketOutline } from "react-icons/io5";
+import { FaBan } from "react-icons/fa";
+
 
 
 function Quiz() {
@@ -43,9 +45,9 @@ function Quiz() {
   const handleAddClick = (() => {
     if (typeof courseId === 'string') {
       client.createQuiz(courseId, quiz).then((quiz) => {
-      dispatch(addQuiz(quiz));
+        dispatch(addQuiz(quiz));
 
-      navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`);
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quiz._id}`);
       });
     } else {
       console.error('courseId is undefined');
@@ -173,7 +175,10 @@ function Quiz() {
 
             {/* Menu & Buttons  */}
             <div>
-              <FaCheckCircle className="me-2" style={{ color: quiz.published ? 'green' : 'grey' }} />
+              {quiz.published ? (<FaCheckCircle className="me-2" style={{ color: 'green' }} />)
+                : (<FaBan className="me-2" style={{ color: 'grey' }} />)}
+
+
               <div className="btn-group">
                 <button type="button" className="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="false" aria-expanded="true">
                   <FaEllipsisV className="me-2" />
