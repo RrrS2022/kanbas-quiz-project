@@ -4,6 +4,7 @@ import { quizzes } from "../../Database";
 interface Quiz {
   _id?: string;
   title: string;
+  courseId: string;
   description: string;
   points: number;
   questionNumber: number;
@@ -39,7 +40,7 @@ const initialState: QuizzesState = {
     published: true, timelimit:20, shuffleAnswers: true, multipleAttempts: false,
     showAnswers: "Immediately", accessCode: "", oneQuestionataTime: true, webCam: false,
     lockQuestion: false, type: "Graded Quiz", group: "QUIZZES", responses: "Always",
-    viewResult: false
+    viewResult: false, courseId: "RS101"
 },
   };
 

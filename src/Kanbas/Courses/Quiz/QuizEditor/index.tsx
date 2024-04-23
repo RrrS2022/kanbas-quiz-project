@@ -19,6 +19,7 @@ export default function QuizEditor() {
 
 
     const handleSave = async () => {
+        console.log("save", quiz)
         const status = await quizClient.updateQuiz(quiz);
         dispatch(updateQuiz(quiz));
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/`);

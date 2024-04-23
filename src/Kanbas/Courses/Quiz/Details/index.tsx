@@ -4,14 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { KanbasState } from "../../../store";
 import * as quizClient from "../client"
-import { selectQuiz } from "../quizzesReducer";
+import { selectQuiz, setQuiz } from "../quizzesReducer";
 import { updateQuiz } from "../quizzesReducer";
 
 export default function QuizDetails() {
     const { courseId, quizId } = useParams();
+    console.log("this is the detial quizId",quizId)
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const quiz = useSelector((state: KanbasState) => state.quizzesReducer.quiz);
+    console.log("this is the current quiz", quiz)
     const togglePublishStatus = (quizId: string, isCurrentlyPublished: boolean) => {
         const changes = { published: !isCurrentlyPublished };
         quizClient.updateQuiz({ _id: quizId, ...changes })
@@ -41,12 +43,25 @@ export default function QuizDetails() {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Preview`)
     };
 
+    // console.log("find quiz", quizClient.findQuizById(quizId))
+
     useEffect(() => {
-        quizClient.findQuiz(quizId).then((quiz) => {
-            dispatch(selectQuiz(quiz));
-        });
-    }, [quizId]);
-    
+        const fetchQuiz = async () => {
+          try {
+            const fetchedQuiz = await quizClient.findQuizById(courseId, quizId);
+            console.log("fetch", fetchedQuiz)
+            dispatch(selectQuiz(fetchedQuiz));
+          } catch (error) {
+            console.error('Error fetching quiz:', error);
+            // Optionally handle the error here, e.g., show an error message
+          }
+        };
+
+        fetchQuiz();
+      }, [quizId, dispatch]);
+
+    //   console.log("this is ",quiz[0].title)
+    //   console.log("this is ",quiz)
 
     return(
         <div className="flex-fill ms-5 ,me-5">
@@ -75,7 +90,7 @@ export default function QuizDetails() {
                 </button>
 
 
-                <button 
+                <button
                     className="btn btn-light"
                     style={{marginLeft:"5px", marginRight:"10px", borderRadius:"4px"}}
                     onClick={handlePreview}>
@@ -110,13 +125,13 @@ export default function QuizDetails() {
                     <b> Assignment Group </b> &#160; {quiz.group}
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <b> Shuffle Answers </b> &#160; {quiz?.shuffleAnswers === true ? "Yes" : "No"} 
+                    <b> Shuffle Answers </b> &#160; {quiz?.shuffleAnswers === true ? "Yes" : "No"}
                 </div>
                 <div style={{textAlign:"center"}}>
                     <b> Time Limit </b> &#160; {quiz.timelimit} Minutes
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <b> Multiple Attempts </b> &#160; {quiz?.multipleAttempts === true ? "Yes" : "No"} 
+                    <b> Multiple Attempts </b> &#160; {quiz?.multipleAttempts === true ? "Yes" : "No"}
                 </div>
                 <div style={{textAlign:"center"}}>
                     <b> View Responses </b> &#160; {quiz.responses}
@@ -125,13 +140,13 @@ export default function QuizDetails() {
                     <b> Show Correct Answers </b> &#160; {quiz.showAnswers}
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <b> One Question at a Time </b> &#160; {quiz?.oneQuestionataTime === true ? "Yes" : "No"} 
+                    <b> One Question at a Time </b> &#160; {quiz?.oneQuestionataTime === true ? "Yes" : "No"}
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <b> Require Respondus LockDown Browser </b> &#160; {quiz?.lockQuestion === true ? "Yes" : "No"} 
+                    <b> Require Respondus LockDown Browser </b> &#160; {quiz?.lockQuestion === true ? "Yes" : "No"}
                 </div>
                 <div style={{textAlign:"center"}}>
-                    <b> Required to View Quiz Results </b> &#160; {quiz?.viewResult === true ? "Yes" : "No"} 
+                    <b> Required to View Quiz Results </b> &#160; {quiz?.viewResult === true ? "Yes" : "No"}
                 </div>
                 <div style={{textAlign:"center"}}>
                     <b> Webcam Required </b> &#160; {quiz.webCam === true ? "Yes" : "No"}
@@ -177,7 +192,7 @@ export default function QuizDetails() {
 
 
             </div>
-        
+
         </div>
     )
 }
