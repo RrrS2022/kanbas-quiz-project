@@ -20,21 +20,41 @@ export default function QuizEditor() {
 
     const handleSave = async () => {
         console.log("save", quiz)
-        const status = await quizClient.updateQuiz(quiz);
-        dispatch(updateQuiz(quiz));
+        if (quizId) {
+            const status = await quizClient.updateQuiz(quiz);
+            dispatch(updateQuiz(quiz));
+        } else {
+            console.error("cannot find quiz")
+        }
+        
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/`);
     };
 
-    const handleSaveAndPublish = () => {
+    const handleSaveAndPublish = async () => {
         if (typeof courseId === 'string') {
-            quizClient.createQuiz(courseId, quiz).then((quiz) => {
-                dispatch(addQuiz(quiz));
-            });
+            if (quizId) {
+                const status = await quizClient.updateQuiz(quiz);
+                dispatch(updateQuiz(quiz));
+            } else {
+                const newQuiz = await quizClient.createQuiz(courseId, quiz);
+                dispatch(addQuiz(newQuiz));
+            }
+            navigate(`/Kanbas/Courses/${courseId}/Quizzes/`);
         } else {
-            console.error('courseId is undefined');
-        };
-        navigate(`/Kanbas/Courses/${courseId}/Quizzes/`);
+            console.error("error");
+        }
     };
+
+    // const handleSaveAndPublish = () => {
+    //     if (typeof courseId === 'string') {
+    //         quizClient.createQuiz(courseId, quiz).then((quiz) => {
+    //             dispatch(addQuiz(quiz));
+    //         });
+    //     } else {
+    //         console.error('courseId is undefined');
+    //     };
+    //     navigate(`/Kanbas/Courses/${courseId}/Quizzes/`);
+    // };
 
     return (
         <div>
