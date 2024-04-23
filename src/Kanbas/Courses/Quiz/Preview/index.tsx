@@ -70,13 +70,30 @@ export default function Preview() {
                         {currentQuestion.question}
                         <hr />
                         <div style={{ padding: 0 }}>
-                            {currentQuestion.options.map((option: any, idx:any) => (
-                                <React.Fragment key={idx}>
-                                    <input type="radio" name={`question_${currentQuestionIndex}`} value={option} />
-                                    &#160; {option}
+                            {currentQuestion.questionType === "BLANKS" ? (
+                                <div className="" style={{ margin: 0, padding: 10 }}>
+                                    Please fill in the correct answer in the box below:
                                     <hr />
-                                </React.Fragment>
-                            ))}
+                                    <div style={{ padding: "10px 0" }}>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            style={{ width: "100%", padding: "30px", margin: "10px 0" }}
+                                            placeholder="Enter your answer here"
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <div style={{ padding: 0 }}>
+                                    {currentQuestion.options.map((option: any, idx: any) => (
+                                        <React.Fragment key={idx}>
+                                            <input type="radio" name={`question_${currentQuestionIndex}`} value={option} />
+                                            &#160; {option}
+                                            <hr />
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
