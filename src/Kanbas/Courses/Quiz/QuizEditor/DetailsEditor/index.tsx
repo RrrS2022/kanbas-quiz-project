@@ -72,9 +72,9 @@ export default function QuizDetailsEditor () {
                     value={quiz.group}
                     style={{ width: "400px", marginLeft: "20px" }}
                     onChange={(e) => dispatch(selectQuiz({ ...quiz, group: e.target.value }))}>
-                    <option selected>ASSIGNMENT</option>
-                    <option value="QUIZ">QUIZ</option>
-                    <option value="EXAM">EXAM</option>
+                    <option selected>ASSIGNMENTS</option>
+                    <option value="QUIZZES">QUIZZES</option>
+                    <option value="EXAMS">EXAMS</option>
                     <option value="PROJECT">PROJECT</option>
                 </select>
             </div>

@@ -25,7 +25,7 @@ interface Question {
   points: number;
   question: string;
   options: string[];
-  answers: string;
+  answers: string[];
 }
 
 interface QuestionEditorProps {
@@ -46,11 +46,11 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({
     setQuestion({
       ...question,
       options: ["True", "False"],
-      answers: e.target.value,
+      answers: [e.target.value],
     });
   };
 
-  const handleTitleChange = (e: any) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion({ ...question, title: e.target.value });
   };
 
@@ -62,6 +62,7 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({
           placeholder="Question Title"
           className="question-title-input"
           onChange={handleTitleChange}
+          value={question.title}
         />
       </div>
       <div className="question-body">
@@ -88,7 +89,7 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({
               type="radio"
               name="answers"
               value="True"
-              defaultChecked={question.answers == "True"}
+              defaultChecked={question.answers[0] == "True"}
               onChange={handleInputChange}
             />{" "}
             True
@@ -98,7 +99,7 @@ const TrueFalseQuestionEditor: React.FC<QuestionEditorProps> = ({
               type="radio"
               name="answers"
               value="False"
-              defaultChecked={question.answers == "False"}
+              defaultChecked={question.answers[0] == "False"}
               onChange={handleInputChange}
             />{" "}
             False
@@ -121,8 +122,8 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({
     const newOptions = [...question.options];
     newOptions[index] = value;
     setQuestion({ ...question, options: newOptions });
-    if (question.answers === question.options[index]) {
-      setQuestion({ ...question, answers: value });
+    if (question.answers[0] === question.options[index]) {
+      setQuestion({ ...question, answers: [value] });
     }
   };
 
@@ -136,15 +137,15 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({
 
   const handleDeleteOption = (index: number) => {
     const newOptions = [...question.options];
-    if (question.answers === newOptions[index]) {
-      setQuestion({ ...question, answers: "" });
+    if (question.answers[0] === newOptions[index]) {
+      setQuestion({ ...question, answers: [""] });
     }
     newOptions.splice(index, 1);
     setQuestion({ ...question, options: newOptions });
   };
 
   const handleCorrectAnswerChange = (value: string) => {
-    setQuestion({ ...question, answers: value });
+    setQuestion({ ...question, answers: [value] });
   };
 
   return (
@@ -182,7 +183,7 @@ const MultipleChoices: React.FC<QuestionEditorProps> = ({
             <input
               type="radio"
               name="correct-answer"
-              checked={question.answers == option}
+              checked={question.answers[0] == option}
               onChange={() => handleCorrectAnswerChange(option)}
               className="correct-answer-radio"
             />
@@ -206,28 +207,28 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({
   setQuestion,
 }) => {
   const handleInputChange = (e: any) => {
-    setQuestion({ ...question, [e.target.name]: e.target.value });
+    setQuestion({ ...question, question: e.target.value });
   };
 
   const handleBlankChange = (index: any, value: any) => {
-    const newBlanks = [...question.options];
+    const newBlanks = [...question.answers];
     newBlanks[index] = value;
-    setQuestion({ ...question, options: newBlanks });
+    setQuestion({ ...question, answers: newBlanks });
   };
 
   const handleAddBlank = () => {
     setQuestion({
       ...question,
-      options: [...question.options, ""],
+      answers: [...question.answers, ""],
       questionType: "BLANKS",
     });
-    console.log(question.options);
+    console.log(question.answers);
   };
 
   const handleDeleteBlank = (index: number) => {
-    const newBlanks = [...question.options];
+    const newBlanks = [...question.answers];
     newBlanks.splice(index, 1);
-    setQuestion({ ...question, options: newBlanks });
+    setQuestion({ ...question, answers: newBlanks });
   };
 
   const handleTitleChange = (e: any) => {
@@ -239,6 +240,7 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({
       <div className="question-header">
         <input
           type="text"
+          value={question.title}
           placeholder="Question Title"
           className="question-title-input"
           onChange={handleTitleChange}
@@ -254,7 +256,7 @@ const MultipleBlanks: React.FC<QuestionEditorProps> = ({
           className="question-textarea"
         ></textarea>
       </div>
-      {question.options.map((blank, index) => (
+      {question.answers.map((blank: any, index: any) => (
         <div key={index} className="answer possible-answer">
           <label className="answer-label">Possible Answer</label>
 
@@ -442,7 +444,11 @@ export default function QuizQuestions() {
                     </div>
                   </td>
                   <td>
-                    <div className="answers-list">{question.answers}</div>
+                    <div className="answers-list">
+                      {question.answers && question.answers.map((answer: any, index: any) => (
+                        <div key={index}>{answer}</div>
+                      ))}
+                    </div>
                   </td>
                   <td>
                     <MdEdit
