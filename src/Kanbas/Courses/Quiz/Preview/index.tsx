@@ -51,6 +51,10 @@ export default function Preview() {
         navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}`)
     }
 
+    const handleEdit = () => {
+        navigate(`/Kanbas/Courses/${courseId}/Quizzes/${quizId}/Editor`)
+    }
+
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
@@ -135,8 +139,9 @@ export default function Preview() {
                 style={{
                     border: "1px solid #ccc", height: "30px",
                     backgroundColor: "lightgray", display: "flex", alignItems: "center",
-                    margin: "20px", padding: 0
-                }}>
+                    margin: "20px", padding: 0, cursor: "pointer"
+                }}
+                onClick={handleEdit}>
                 <MdOutlineEdit />&#160; Keep Editing This Quiz
             </div>
 
