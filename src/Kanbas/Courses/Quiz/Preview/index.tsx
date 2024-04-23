@@ -7,6 +7,7 @@ import { MdOutlineEdit } from "react-icons/md";
 import "../../Assignments/index.css";
 import { setQuestions } from "../Questions/questionsReducer";
 import { findAllQuestionsForQuiz } from "../Questions/client";
+import { FaRegQuestionCircle } from 'react-icons/fa';
 
 export default function Preview() {
     const { courseId, quizId } = useParams();
@@ -34,6 +35,10 @@ export default function Preview() {
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(currentQuestionIndex + 1);
         }
+    };
+
+    const handleSelectQuestion = (index: number) => {
+        setCurrentQuestionIndex(index);
     };
 
     const handlePreviousQuestion = () => {
@@ -133,6 +138,14 @@ export default function Preview() {
                     margin: "20px", padding: 0
                 }}>
                 <MdOutlineEdit />&#160; Keep Editing This Quiz
+            </div>
+
+            <div>
+                {questions.map((question, index) => (
+                    <div key={index} onClick={() => handleSelectQuestion(index)}>
+                        <FaRegQuestionCircle />&#160;<b style={{color:"#BC3518", cursor: "pointer"}}>Question {index + 1}</b><br />
+                    </div>
+                ))}
             </div>
         </div>
     );
