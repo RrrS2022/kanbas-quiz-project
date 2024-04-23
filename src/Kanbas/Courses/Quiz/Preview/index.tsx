@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { KanbasState } from "../../../store";
 import { FiAlertCircle , FiArrowRight } from "react-icons/fi";
+import { FaRegQuestionCircle } from "react-icons/fa";
 import { MdOutlineEdit } from "react-icons/md";
 import "../../Assignments/index.css"
 
@@ -82,6 +83,11 @@ export default function Preview () {
                         backgroundColor: "lightgray", display: "flex",  alignItems: "center",
                         margin: "20px", padding: 0}}>
                     <MdOutlineEdit />&#160; Keep Editing This Quiz
+                </div>
+                <div>
+                    <h3>Questions</h3>
+                    <FaRegQuestionCircle />&#160;<b style={{color:"#BC3518"}}>Question 1</b><br />
+                    <FaRegQuestionCircle />&#160;<b style={{color:"#BC3518"}}>Question 2</b>
                 </div>
             </div>
             
